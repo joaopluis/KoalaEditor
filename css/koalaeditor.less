@@ -1,6 +1,7 @@
 @color: #77A2AD;
 @border-color: #CCC;
 @toolbar-background: #F7F7F7;
+@toolbar-button-color: #333;
 
 .ke-box{
   display: flex;
@@ -45,7 +46,7 @@
     position: relative;
     font-size: 16px;
     &:hover .ke-dropdown{
-      display: block;
+      display: flex;
     }
   }
 
@@ -61,7 +62,7 @@
     background: none;
     cursor: pointer;
     transition: all .3s;
-    color: #666;
+    color: @toolbar-button-color;
     &:hover{
       background: @color;
       color: white;
@@ -88,16 +89,16 @@
   left:0;
   top: 2em;
   margin-top: -1px;
-  min-width: 14em;
+  //min-width: 3em;
   display: none;
   ul{
     margin: 0;
     padding: 0;
     list-style: none;
-
     li{
       padding: 0.6em;
       transition: all .5s;
+      white-space: nowrap;
       &:hover{
         background: @color;
         color: white;

@@ -40,7 +40,7 @@
   font-size: 16px;
 }
 .ke-toolbar .ke-button-container:hover .ke-dropdown {
-  display: block;
+  display: flex;
 }
 .ke-toolbar .ke-toolbar-button {
   font-size: 16px;
@@ -54,7 +54,7 @@
   background: none;
   cursor: pointer;
   transition: all .3s;
-  color: #666;
+  color: #333333;
 }
 .ke-toolbar .ke-toolbar-button:hover {
   background: #77a2ad;
@@ -77,7 +77,6 @@
   left: 0;
   top: 2em;
   margin-top: -1px;
-  min-width: 14em;
   display: none;
 }
 .ke-dropdown ul {
@@ -88,6 +87,7 @@
 .ke-dropdown ul li {
   padding: 0.6em;
   transition: all .5s;
+  white-space: nowrap;
 }
 .ke-dropdown ul li:hover {
   background: #77a2ad;

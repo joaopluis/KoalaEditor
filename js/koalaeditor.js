@@ -1,22 +1,12 @@
-/**
- * Created by João on 03/02/2015.
- */
-
 var Koala = Koala || {};
 
 (function ($) {
-
-    function nl2br(str, is_xhtml) {
-        var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
-        return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
-    }
 
     $.fn.blockParent = function () {
         return this.parents().filter(function () {
             return $(this).css("display") === "block";
         }).first();
-    }
-
+    };
 
     /**
      * Command class
@@ -32,20 +22,20 @@ var Koala = Koala || {};
                 return false;
             }
         }
-    }
+    };
 
     Koala.commands = {};
 
     Koala.addCommand = function (name, execute, isActive) {
         Koala.commands[name] = new Koala.Command(name, execute, isActive);
-    }
+    };
 
     Koala.getCommand = function (name) {
         if (Koala.commands[name]) {
             return Koala.commands[name];
         }
         return null;
-    }
+    };
 
     /**
      * Koala Commands
@@ -84,20 +74,28 @@ var Koala = Koala || {};
     });
 
     Koala.addCommand("formatBlock", function (editor, value) {
-        console.log("$" + value + "$");
         var selection = window.getSelection();
         var blockElement = $(window.getSelection().focusNode).blockParent();
         if (blockElement.is(value)) {
-            console.log("is");
             document.execCommand("formatBlock", false, "<p>");
         } else {
-            console.log("isNot");
             document.execCommand("formatBlock", false, "<" + value + ">");
         }
     }, function (value) {
         var selection = window.getSelection();
         var blockElement = $(window.getSelection().focusNode).blockParent();
         return blockElement.is(value);
+    });
+
+    Koala.addCommand("align", function (editor, value) {
+        if ($.inArray(value, ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"]) > -1) {
+            document.execCommand(value, false, null);
+        }
+    }, function (editor, value) {
+        if ($.inArray(value, ["justifyLeft", "justifyCenter", "justifyRight", "justifyFull"])) {
+            return document.queryCommandState(value);
+        }
+        return false;
     });
 
     Koala.addCommand("undo", function (editor, value) {
@@ -168,6 +166,7 @@ var Koala = Koala || {};
         var button = $('<button />');
         button.addClass('ke-toolbar-button');
         button.attr('data-name', this.options.name);
+        button.attr('title', this.options.label);
         if (this.options.icon) {
             button.html('<span class="fa ' + this.options.icon + '"></span>');
         } else if (this.options.label) {
@@ -181,10 +180,16 @@ var Koala = Koala || {};
             var dropdown = $('<div />');
             dropdown.addClass('ke-dropdown');
             var ddList = $('<ul />');
-            console.log(this.options.options);
-            $.each(this.options.options, function (index, label) {
-                ddList.append('<li data-button="' + btn.options.name + '" data-value="' + index + '">' + label + '</li>');
-            })
+            $.each(this.options.options, function (index, value) {
+                var template = '<li data-button="' + btn.options.name + '" data-value="' + value.value + '" title="' + value.label + '">';
+                if (value.icon) {
+                    template += '<span class="fa ' + value.icon + '"></span>';
+                } else {
+                    template += value.label;
+                }
+                template += '</li>';
+                ddList.append(template);
+            });
             dropdown.append(ddList);
             btnDiv.append(dropdown);
         }
@@ -201,7 +206,7 @@ var Koala = Koala || {};
     Koala.buttons = [];
 
     Koala.addButton = function (options) {
-        koala.buttons[options.name] = new Koala.Button(options);
+        Koala.buttons[options.name] = new Koala.Button(options);
     };
 
     Koala.getButton = function (name) {
@@ -209,62 +214,98 @@ var Koala = Koala || {};
             return Koala.buttons[name];
         }
         return null;
-    }
+    };
 
     /**
      * Buttons
      */
 
-    Koala.buttons['bold'] = new Koala.Button({name: "bold", label: "Bold", icon: "fa-bold", command: "bold"});
-    Koala.buttons['italic'] = new Koala.Button({name: "italic", label: "Italic", icon: "fa-italic", command: "italic"});
-    Koala.buttons['underline'] = new Koala.Button({
+    Koala.addButton({name: "bold", label: "Bold", icon: "fa-bold", command: "bold"});
+    Koala.addButton({name: "italic", label: "Italic", icon: "fa-italic", command: "italic"});
+    Koala.addButton({
         name: "underline",
         label: "Underline",
         icon: "fa-underline",
         command: "underline"
     });
 
-    Koala.buttons['ol'] = new Koala.Button({
+    Koala.addButton({
         name: "ol",
         label: "Ordered list",
         icon: "fa-list-ol",
         command: "orderedList"
     });
-    Koala.buttons['ul'] = new Koala.Button({
+
+    Koala.addButton({
         name: "ul",
         label: "Unordered list",
         icon: "fa-list-ul",
         command: "orderedList"
     });
 
-    Koala.buttons['formatBlock'] = new Koala.Button({
+    Koala.addButton({
         name: "formatBlock",
         label: "Block Style",
         icon: "fa-paragraph",
         command: "formatBlock",
-        options: {
-            p: "Normal",
-            h1: "Heading 1"
-        }
+        options: [
+            {
+                value: "p",
+                label: "Normal"
+            },
+            {
+                value: "h1",
+                label: "Heading 1"
+            }
+        ]
     });
 
-    Koala.buttons['undo'] = new Koala.Button({name: "undo", label: "Undo", icon: "fa-undo", command: "undo"});
-    Koala.buttons['redo'] = new Koala.Button({name: "redo", label: "Redo", icon: "fa-repeat", command: "redo"});
+    Koala.addButton({
+        name: "align",
+        label: "Align",
+        icon: "fa-align-left",
+        command: "align",
+        options: [
+            {
+                value: "justifyLeft",
+                label: "Left",
+                icon: "fa-align-left"
+            },
+            {
+                value: "justifyCenter",
+                label: "Center",
+                icon: "fa-align-center"
+            },
+            {
+                value: "justifyRight",
+                label: "Right",
+                icon: "fa-align-right"
+            },
+            {
+                value: "justifyFull",
+                label: "Justify",
+                icon: "fa-align-justify"
+            }
+        ]
+    });
 
-    Koala.buttons['image'] = new Koala.Button({
+    Koala.addButton({name: "undo", label: "Undo", icon: "fa-undo", command: "undo"});
+    Koala.addButton({name: "redo", label: "Redo", icon: "fa-repeat", command: "redo"});
+
+    Koala.addButton({
         name: "image", label: "Insert image", icon: "fa-image", command: "image", prompt: "Image URL:"
     });
-    Koala.buttons['link'] = new Koala.Button({
+    Koala.addButton({
         name: "link", label: "Link", icon: "fa-link", command: "link", prompt: "Link URL:"
     });
-    Koala.buttons['unlink'] = new Koala.Button({
+    Koala.addButton({
         name: "unlink",
         label: "Remove link",
         icon: "fa-unlink",
         command: "unlink"
     });
 
-    Koala.buttons['code'] = new Koala.Button({name: "code", label: "View code", icon: "fa-code", command: "code"});
+    Koala.addButton({name: "code", label: "View code", icon: "fa-code", command: "code"});
 
     Koala.Editor = function (element, settings) {
         this.element = element;
@@ -299,6 +340,7 @@ var Koala = Koala || {};
         this.toolbar = $('<div />', {
             "class": "ke-toolbar"
         });
+
         $.each(this.settings.buttons, function (index, value) {
             if (value == "sep") {
                 editor.toolbar.append($('<div />').addClass("sep"));
@@ -313,13 +355,13 @@ var Koala = Koala || {};
 
         this.toolbar.on('mousedown', 'button', function () {
             if (!Koala.buttons[$(this).attr('data-name')].options.options) {
-                Koala.buttons[$(this).attr('data-name')].do(editor, $(this).parent(), null);
+                Koala.buttons[$(this).attr('data-name')].do(editor, null);
             }
         });
 
         this.toolbar.on('mousedown', '.ke-dropdown li', function (e) {
             e.preventDefault();
-            Koala.buttons[$(this).attr("data-button")].do(editor, $(this).parents(".ke-toolbar-button"), $(this).attr("data-value"));
+            Koala.getButton($(this).attr("data-button")).do(editor, $(this).attr("data-value"));
         });
 
         this.textWindow = $('<div />', {
@@ -384,20 +426,20 @@ var Koala = Koala || {};
 
     Koala.Editor.prototype.getHTML = function () {
         return this.html;
-    }
+    };
 
     Koala.Editor.prototype.setHTML = function (html) {
         this.textWindow.html(html);
         this.codeWindow.text(html);
         this.html = html;
-    }
+    };
 
     Koala.Editor.prototype.destroy = function () {
         if (this.formControl) {
             this.element.remove();
             this.formControl.show();
         }
-    }
+    };
 
     Koala.Editor.prototype.setCursor = function (row, column) {
         var range = document.createRange();
@@ -406,7 +448,7 @@ var Koala = Koala || {};
         range.collapse(true);
         sel.removeAllRanges();
         sel.addRange(range);
-    }
+    };
 
     Koala.Editor.prototype.updateToolbar = function () {
         var editor = this;
@@ -421,14 +463,12 @@ var Koala = Koala || {};
 
     $.fn.koala = function (options) {
 
-
         if (this.data('koala')) {
             return this.data('koala');
         }
 
-        // This is the easiest way to have default options.
         var settings = $.extend({
-            buttons: ['bold', 'italic', 'underline', 'sep', 'formatBlock', 'ul', 'ol', 'image', 'link', 'unlink', 'sep', 'undo', 'redo', 'sep', 'code']
+            buttons: ['bold', 'italic', 'underline', 'sep', 'align', 'formatBlock', 'ul', 'ol', 'image', 'link', 'unlink', 'sep', 'undo', 'redo', 'sep', 'code']
         }, options);
 
         var editor = new Koala.Editor(this, settings);
