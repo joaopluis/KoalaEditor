@@ -15,22 +15,22 @@
         }).first();
     }
 
-    var KOALA = KOALA || {};
+    var Koala = Koala || {};
 
-    KOALA.Button = function (options) {
+    Koala.Button = function (options) {
         this.options = options;
     };
 
-    KOALA.Button.prototype.do = function (editor, button, value) {
+    Koala.Button.prototype.do = function (editor, button, value) {
         console.log("inDo");
         if(!value){
             value = this.options.value;
         }
         console.log(value);
         if (this.options.command) {
-            if (KOALA.commands[this.options.command]) {
+            if (Koala.commands[this.options.command]) {
                 console.log("custom command");
-                KOALA.commands[this.options.command].execute(value);
+                Koala.commands[this.options.command].execute(value);
             } else {
                 console.log(this.options.command);
                 document.execCommand(this.options.command, false, value);
@@ -41,7 +41,7 @@
         }
     };
 
-    KOALA.Button.prototype.render = function () {
+    Koala.Button.prototype.render = function () {
         var btn = this;
         var btnDiv = $('<div />');
         btnDiv.addClass('ke-button-container')
@@ -71,61 +71,61 @@
         return btnDiv;
     };
 
-    KOALA.Button.prototype.isActive = function (value) {
+    Koala.Button.prototype.isActive = function (value) {
         if (this.options.command) {
-            if (KOALA.commands[this.options.command]) {
-                return KOALA.commands[this.options.command].isActive(value);
+            if (Koala.commands[this.options.command]) {
+                return Koala.commands[this.options.command].isActive(value);
             }
             return document.queryCommandState(this.options.command);
         }
         return false;
     };
 
-    KOALA.buttons = [];
+    Koala.buttons = [];
 
-    KOALA.buttons['bold'] = new KOALA.Button({
+    Koala.buttons['bold'] = new Koala.Button({
         name: "bold", icon: "fa-bold", command: "bold", function: function (editor, button) {
             editor.setHTML(editor.getHTML().replace('<b>', '<strong>').replace('</b>', '</strong>'));
         }
     });
-    KOALA.buttons['italic'] = new KOALA.Button({name: "italic", icon: "fa-italic", command: "italic"});
-    KOALA.buttons['underline'] = new KOALA.Button({
+    Koala.buttons['italic'] = new Koala.Button({name: "italic", icon: "fa-italic", command: "italic"});
+    Koala.buttons['underline'] = new Koala.Button({
         name: "underline",
         icon: "fa-underline",
         command: "underline"
     });
 
-    KOALA.buttons['ol'] = new KOALA.Button({name: "ol", icon: "fa-list-ol", command: "insertOrderedList"});
-    KOALA.buttons['ul'] = new KOALA.Button({name: "ul", icon: "fa-list-ul", command: "insertUnorderedList"});
+    Koala.buttons['ol'] = new Koala.Button({name: "ol", icon: "fa-list-ol", command: "insertOrderedList"});
+    Koala.buttons['ul'] = new Koala.Button({name: "ul", icon: "fa-list-ul", command: "insertUnorderedList"});
 
-    KOALA.buttons['formatBlock'] = new KOALA.Button({
+    Koala.buttons['formatBlock'] = new Koala.Button({
         name: "formatBlock",
         icon: "fa-paragraph",
         command: "formatBlock",
         options: {
             p: "Normal",
-            h1: "Cabeçalho 1"
+                h1: "Heading 1"
         }
     });
 
-    KOALA.buttons['undo'] = new KOALA.Button({name: "undo", icon: "fa-undo", command: "undo"});
-    KOALA.buttons['redo'] = new KOALA.Button({name: "redo", icon: "fa-repeat", command: "redo"});
+    Koala.buttons['undo'] = new Koala.Button({name: "undo", icon: "fa-undo", command: "undo"});
+    Koala.buttons['redo'] = new Koala.Button({name: "redo", icon: "fa-repeat", command: "redo"});
 
-    KOALA.buttons['image'] = new KOALA.Button({
+    Koala.buttons['image'] = new Koala.Button({
         name: "image", icon: "fa-image", function: function (editor, button) {
-            var url = prompt("URL da imagem:");
+            var url = prompt("Image URL:");
             document.execCommand("insertImage", false, url);
         }
     });
-    KOALA.buttons['link'] = new KOALA.Button({
+    Koala.buttons['link'] = new Koala.Button({
         name: "link", icon: "fa-link", function: function (editor, button) {
-            var url = prompt("URL destino:");
+            var url = prompt("Link URL:");
             document.execCommand("createLink", false, url);
         }
     });
-    KOALA.buttons['unlink'] = new KOALA.Button({name: "unlink", icon: "fa-unlink", command: "unlink"});
+    Koala.buttons['unlink'] = new Koala.Button({name: "unlink", icon: "fa-unlink", command: "unlink"});
 
-    KOALA.buttons['code'] = new KOALA.Button({
+    Koala.buttons['code'] = new Koala.Button({
         name: "code", icon: "fa-code", function: function (editor, button) {
             if (editor.textWindow.is(":visible")) {
                 button.addClass("active");
@@ -142,7 +142,7 @@
         }
     });
 
-    KOALA.Command = function (name, execute, isActive) {
+    Koala.Command = function (name, execute, isActive) {
         this.name = name;
         this.execute = execute;
         if (isActive) {
@@ -154,8 +154,8 @@
         }
     }
 
-    KOALA.commands = {};
-    KOALA.commands['formatBlock'] = new KOALA.Command("formatBlock", function (value) {
+    Koala.commands = {};
+    Koala.commands['formatBlock'] = new Koala.Command("formatBlock", function (value) {
         console.log("$"+value+"$");
         var selection = window.getSelection();
         var blockElement = $(window.getSelection().focusNode).blockParent();
@@ -172,7 +172,7 @@
         return blockElement.is(value);
     });
 
-    KOALA.Editor = function (element, settings) {
+    Koala.Editor = function (element, settings) {
         this.element = element;
         this.html = element.html();
         this.settings = settings;
@@ -182,7 +182,7 @@
         this.formControl = null;
     };
 
-    KOALA.Editor.prototype.init = function () {
+    Koala.Editor.prototype.init = function () {
 
         var editor = this;
 
@@ -208,9 +208,9 @@
         $.each(this.settings.buttons, function (index, value) {
             if (value == "sep") {
                 editor.toolbar.append($('<div />').addClass("sep"));
-            } else if (KOALA.buttons[value]) {
-                var button = KOALA.buttons[value].render();
-                button.data("button", KOALA.buttons[value]);
+            } else if (Koala.buttons[value]) {
+                var button = Koala.buttons[value].render();
+                button.data("button", Koala.buttons[value]);
                 editor.toolbar.append(button);
             }
 
@@ -218,14 +218,14 @@
         this.element.append(this.toolbar);
 
         this.toolbar.on('mousedown', 'button', function () {
-            if (!KOALA.buttons[$(this).attr('data-name')].options.options) {
-                KOALA.buttons[$(this).attr('data-name')].do(editor, $(this).parent(), null);
+            if (!Koala.buttons[$(this).attr('data-name')].options.options) {
+                Koala.buttons[$(this).attr('data-name')].do(editor, $(this).parent(), null);
             }
         });
 
         this.toolbar.on('mousedown', '.ke-dropdown li', function (e) {
             e.preventDefault();
-            KOALA.buttons[$(this).attr("data-button")].do(editor, $(this).parents(".ke-toolbar-button"), $(this).attr("data-value"));
+            Koala.buttons[$(this).attr("data-button")].do(editor, $(this).parents(".ke-toolbar-button"), $(this).attr("data-value"));
         });
 
         this.textWindow = $('<div />', {
@@ -261,12 +261,12 @@
             $(this).wrap('<div class="editing-image"></div>');
             var wrapper = $(this).parent();
             console.log(wrapper);
-            var button = $('<button contenteditable="false">Editar</button>');
+            var button = $('<button contenteditable="false">Edit</button>');
             console.log(button);
             wrapper.append(button);
             img = $(this);
             button.click(function () {
-                width = prompt("Comprimento");
+                width = prompt("Width");
                 img.css('width', parseInt(width));
             });
             /**/
@@ -275,7 +275,7 @@
         this.textWindow.on('selectstart', function () {
             $(document).one('mouseup keyup', function () {
                 editor.toolbar.find('.ke-toolbar-button').each(function (index) {
-                    if (KOALA.buttons[$(this).attr('data-name')].isActive(KOALA.buttons[$(this).attr('data-name')].options.value)) {
+                    if (Koala.buttons[$(this).attr('data-name')].isActive(Koala.buttons[$(this).attr('data-name')].options.value)) {
                         $(this).addClass("active");
                     } else {
                         $(this).removeClass("active");
@@ -294,24 +294,24 @@
 
     };
 
-    KOALA.Editor.prototype.getHTML = function () {
+    Koala.Editor.prototype.getHTML = function () {
         return this.html;
     }
 
-    KOALA.Editor.prototype.setHTML = function (html) {
+    Koala.Editor.prototype.setHTML = function (html) {
         this.textWindow.html(html);
         this.codeWindow.text(html);
         this.html = html;
     }
 
-    KOALA.Editor.prototype.destroy = function () {
+    Koala.Editor.prototype.destroy = function () {
         if (this.formControl) {
             this.element.remove();
             this.formControl.show();
         }
     }
 
-    KOALA.Editor.prototype.setCursor = function (row, column) {
+    Koala.Editor.prototype.setCursor = function (row, column) {
         var range = document.createRange();
         var sel = window.getSelection();
         range.setStart(this.textWindow[0].childNodes[row], column);
@@ -332,7 +332,7 @@
             buttons: ['bold', 'italic', 'underline', 'sep', 'formatBlock', 'ul', 'ol', 'image', 'link', 'unlink', 'sep', 'undo', 'redo', 'sep', 'code']
         }, options);
 
-        var editor = new KOALA.Editor(this, settings);
+        var editor = new Koala.Editor(this, settings);
 
         this.data('koala', editor);
 
