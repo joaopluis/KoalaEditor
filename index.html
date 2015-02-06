@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Koala Editor</title>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="js/koalaeditor.js"></script>
+    <link rel="stylesheet" href="css/koalaeditor.css"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <style>
+        body {
+            font-size: 16px;
+            font-family: Lato, Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 2em;
+        }
+
+        #logo {
+            margin-bottom: 2em;
+            height: 3.4em;
+        }
+
+        footer {
+            margin-top: 2em;
+            text-align: center;
+            color: #666666;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #77A2AD;
+        }
+
+    </style>
+</head>
+<body>
+
+<img id="logo" src="images/logo.png"/>
+
+<textarea class="editable"></textarea>
+<button id="destroy">Cancelar</button>
+
+<footer>&copy; <a href="#">João Luís</a> 2015</footer>
+
+<script>
+    $('.editable').koala();
+    $('#destroy').click(function () {
+        $('.editable').koala().destroy();
+    });
+</script>
+
+</body>
+</html>

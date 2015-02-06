@@ -1,0 +1,117 @@
+@color: #77A2AD;
+@border-color: #CCC;
+@toolbar-background: #F7F7F7;
+
+.ke-box{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.ke-editor{
+  border: 1px solid @border-color;
+  padding: 10px;
+  &:focus{
+    outline: none;
+  }
+  .editing-image{
+    outline: solid 1px @color;
+    display: inline-block;
+    position: relative;
+    
+    button{
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+      background: @color;
+      color: white;
+      font-size: 14px;
+      border:none;
+      padding:0.5em;
+      cursor: pointer;
+    }
+  }
+}
+.ke-toolbar{
+  border: 1px solid @border-color;
+  border-bottom: none;
+  background: @toolbar-background;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+
+  .ke-button-container{
+    display:flex;
+    position: relative;
+    font-size: 16px;
+    &:hover .ke-dropdown{
+      display: block;
+    }
+  }
+
+  .ke-toolbar-button{
+    font-size: 16px;
+    line-height: 1em;
+    min-width: 2.2em;
+    text-align: center;
+    border: none;
+    font-family: Lato, sans-serif;
+    font-weight: bold;
+    padding:0.6em;
+    background: none;
+    cursor: pointer;
+    transition: all .3s;
+    color: #666;
+    &:hover{
+      background: @color;
+      color: white;
+    }
+    &:focus{
+      outline: none;
+    }
+    &.active{
+      color: @color;
+    }
+  }
+
+  .sep{
+    width: 1px;
+    background: @border-color;
+  }
+
+}
+
+.ke-dropdown{
+  background: white;
+  border: 1px solid @border-color;
+  position: absolute;
+  left:0;
+  top: 2em;
+  margin-top: -1px;
+  min-width: 14em;
+  display: none;
+  ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li{
+      padding: 0.6em;
+      transition: all .5s;
+      &:hover{
+        background: @color;
+        color: white;
+      }
+    }
+  }
+}
+
+.ke-code{
+  border: 1px solid @border-color;
+  margin:0;
+  padding: 10px;
+  font-family: monospace;
+  background: #444;
+  color: #CCC;
+  display: none;
+}
