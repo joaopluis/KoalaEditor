@@ -90,6 +90,7 @@
   padding: 0.6em;
   transition: all .5s;
   white-space: nowrap;
+  color: black;
 }
 .ke-dropdown ul li:hover {
   background: #77a2ad;

@@ -4,80 +4,32 @@
     <meta charset="UTF-8">
     <title>Koala Editor</title>
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
     <script src="js/koalaeditor.min.js"></script>
     <link rel="stylesheet" href="css/koalaeditor.min.css"/>
+
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="website_assets/website.min.css"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link rel="icon" type="image/png" href="images/favicon.png" />
-    <style>
-        body {
-            font-size: 16px;
-            font-family: Lato, Arial, Helvetica, sans-serif;
-            margin: 0;
-            padding: 2em;
-        }
-
-        #logo {
-            margin-bottom: 2em;
-            height: 3.4em;
-            display: block;
-        }
-
-        button{
-            border: none;
-            background: #77A2AD;
-            font-family: Lato, Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            border-radius: 0.3em;
-            margin: 0.5em 0;
-            padding: 0.6em 0.8em;
-            color: white;
-        }
-
-        h1{
-            color: #77A2AD;
-            font-size: 2em;
-        }
-
-        h2{
-            font-size: 1.3em;
-            color: #77A2AD;
-        }
-
-        code{
-            display: inline-block;
-            padding: 0.3em 0.4em 0.2em;
-            border-radius: 0.3em;
-            background: #d6e3e6;
-            border: dashed 1px #77A2AD;
-        }
-
-        textarea{
-            font-family: Lato, Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            padding:1em;
-            border: 1px solid #CCC;
-            border-radius: 0.3em;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        footer {
-            margin-top: 2em;
-            text-align: center;
-            color: #666666;
-        }
-
-        footer a {
-            text-decoration: none;
-            color: #77A2AD;
-        }
-
-    </style>
+    <link rel="icon" type="image/png" href="website_assets/images/favicon.png"/>
 </head>
 <body>
 
-<img id="logo" src="images/logo.png"/>
+<header>
+
+    <img id="logo" src="website_assets/images/logo.png"/>
+
+</header>
+
+<div id="topBox">
+    <div class="mainEditable">
+        <h1>An awesome jQuery WYSIWYG HTML text editor.</h1>
+
+        <p>Easy to integrate and with a simple flat design. Also, with a cute koala as a mascot.</p>
+    </div>
+</div>
 
 <h1>Examples</h1>
 
@@ -101,6 +53,7 @@
 <footer>&copy; <a href="#">João Luís</a> 2015</footer>
 
 <script>
+    $('.mainEditable').koala();
     $('.editable').koala();
     $('#destroy').click(function () {
         $('.editable').koala().destroy();

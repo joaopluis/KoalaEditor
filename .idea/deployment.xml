@@ -5,7 +5,7 @@
       <paths name="joaopluis.pt">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/joaopluis/public_html/koala" local="$PROJECT_DIR$" web="/koala" />
+            <mapping deploy="/public_html/koala" local="$PROJECT_DIR$" web="/koala" />
           </mappings>
         </serverdata>
       </paths>
