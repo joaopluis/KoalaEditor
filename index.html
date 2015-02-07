@@ -20,6 +20,46 @@
         #logo {
             margin-bottom: 2em;
             height: 3.4em;
+            display: block;
+        }
+
+        button{
+            border: none;
+            background: #77A2AD;
+            font-family: Lato, Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            border-radius: 0.3em;
+            margin: 0.5em 0;
+            padding: 0.6em 0.8em;
+            color: white;
+        }
+
+        h1{
+            color: #77A2AD;
+            font-size: 2em;
+        }
+
+        h2{
+            font-size: 1.3em;
+            color: #77A2AD;
+        }
+
+        code{
+            display: inline-block;
+            padding: 0.3em 0.4em 0.2em;
+            border-radius: 0.3em;
+            background: #d6e3e6;
+            border: dashed 1px #77A2AD;
+        }
+
+        textarea{
+            font-family: Lato, Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            padding:1em;
+            border: 1px solid #CCC;
+            border-radius: 0.3em;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         footer {
@@ -39,8 +79,24 @@
 
 <img id="logo" src="images/logo.png"/>
 
-<textarea class="editable"></textarea>
-<button id="destroy">Cancel</button>
+<h1>Examples</h1>
+
+<h2><code>&lt;textarea&gt;</code></h2>
+
+<textarea class="editable">
+    <p>Some dummy content in this <code>textarea</code>.</p>
+</textarea>
+<button id="destroy">Disable</button>
+<button id="enable" style="display: none">Enable</button>
+
+<h2><code>&lt;div&gt;</code></h2>
+
+<div class="editable2">
+    <p>Some dummy content in this <code>div</code>.</p>
+</div>
+<button id="destroy2">Disable</button>
+<button id="enable2" style="display: none">Enable</button>
+
 
 <footer>&copy; <a href="#">João Luís</a> 2015</footer>
 
@@ -48,6 +104,25 @@
     $('.editable').koala();
     $('#destroy').click(function () {
         $('.editable').koala().destroy();
+        $(this).hide();
+        $('#enable').show();
+    });
+    $('#enable').click(function () {
+        $('.editable').koala();
+        $(this).hide();
+        $('#destroy').show();
+    });
+
+    $('.editable2').koala();
+    $('#destroy2').click(function () {
+        $('.editable2').koala().destroy();
+        $(this).hide();
+        $('#enable2').show();
+    });
+    $('#enable2').click(function () {
+        $('.editable2').koala();
+        $(this).hide();
+        $('#destroy2').show();
     });
 </script>
 

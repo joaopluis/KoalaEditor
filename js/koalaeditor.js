@@ -240,7 +240,7 @@ var Koala = Koala || {};
         name: "ul",
         label: "Unordered list",
         icon: "fa-list-ul",
-        command: "orderedList"
+        command: "unorderedList"
     });
 
     Koala.addButton({
@@ -438,6 +438,11 @@ var Koala = Koala || {};
         if (this.formControl) {
             this.element.remove();
             this.formControl.show();
+            this.formControl.data("koala", null);
+        } else {
+            this.element.removeClass("ke-box");
+            this.element.html(this.getHTML());
+            this.element.data("koala", null);
         }
     };
 
