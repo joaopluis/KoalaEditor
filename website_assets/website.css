@@ -1,0 +1,84 @@
+body {
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 2em;
+}
+#logo {
+  margin-bottom: 2em;
+  height: 3.4em;
+  display: block;
+}
+#topBox {
+  margin: 0 -2rem;
+  font-size: 1.8em;
+  font-weight: 300;
+  text-align: center;
+  padding: 2em;
+  color: white;
+  background-size: cover;
+  background-position: center;
+  background: url(images/bamboo.jpg);
+  position: relative;
+}
+#topBox p,
+#topBox h1 {
+  position: relative;
+}
+#topBox:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  background: black;
+  opacity: 0.4;
+}
+#topBox h1 {
+  font-size: 1.6em;
+  font-weight: 300;
+}
+button {
+  border: none;
+  background: #77a2ad;
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 0.6em 0.8em;
+  color: white;
+}
+section h1 {
+  color: #77a2ad;
+  font-size: 2em;
+}
+h2 {
+  font-size: 1.3em;
+  color: #77A2AD;
+}
+code {
+  display: inline-block;
+  padding: 0.3em 0.4em 0.2em;
+  border-radius: 0.3em;
+  background: #f6f9fa;
+  border: dashed 1px #77a2ad;
+}
+textarea {
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  padding: 1em;
+  border: 1px solid #CCC;
+  border-radius: 0.3em;
+  width: 100%;
+  box-sizing: border-box;
+}
+footer {
+  margin-top: 2em;
+  text-align: center;
+  color: #666666;
+}
+footer a {
+  text-decoration: none;
+  color: #77a2ad;
+}
