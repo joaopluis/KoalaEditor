@@ -39,9 +39,6 @@
   position: relative;
   font-size: 16px;
 }
-.ke-toolbar .ke-button-container:hover .ke-dropdown {
-  display: flex;
-}
 .ke-toolbar .ke-toolbar-button {
   font-size: 16px;
   line-height: 1em;
@@ -78,8 +75,8 @@
   position: absolute;
   left: 0;
   top: 2em;
-  margin-top: -1px;
   display: none;
+  text-align: left;
 }
 .ke-dropdown ul {
   margin: 0;

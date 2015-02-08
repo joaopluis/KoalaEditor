@@ -1,6 +1,6 @@
 @color: #77A2AD;
 
-.font(){
+.font() {
   font-size: 16px;
   font-family: Lato, Arial, Helvetica, sans-serif;
 }
@@ -11,10 +11,36 @@ body {
   padding: 2em;
 }
 
-#logo {
+#mainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2em;
+}
+
+#logo {
   height: 3.4em;
   display: block;
+}
+
+#topNav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    a {
+      color: #333;
+      padding: 0 1rem;
+      line-height: 2rem;
+      text-decoration: none;
+      &.icon {
+        font-size: 1.8em;
+      }
+    }
+  }
 }
 
 #topBox {
@@ -24,24 +50,25 @@ body {
   text-align: center;
   padding: 2em;
   color: white;
+  text-shadow: 0 0 0.4em rgba(0, 0, 0, 0.25);
   background-size: cover;
   background-position: center;
   background: url(images/bamboo.jpg);
   position: relative;
-  p, h1{
+  p, h1 {
     position: relative;
   }
-  &:before{
+  &:before {
     position: absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    left:0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     content: '';
     background: black;
     opacity: 0.4;
   }
-  h1{
+  h1 {
     font-size: 1.6em;
     font-weight: 300;
   }

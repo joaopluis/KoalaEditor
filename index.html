@@ -1,26 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+
     <meta charset="UTF-8">
-    <title>Koala Editor</title>
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-
-    <script src="js/koalaeditor.min.js"></script>
-    <link rel="stylesheet" href="css/koalaeditor.min.css"/>
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="website_assets/website.min.css"/>
-
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
     <link rel="icon" type="image/png" href="website_assets/images/favicon.png"/>
+    <title>Koala Editor</title>
+
+    <!-- Load the Lato font -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <!-- Load website CSS -->
+    <link rel="stylesheet" href="website_assets/website.min.css"/>
+
+    <!-- Load jQuery -->
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <!-- Load Koala -->
+    <script src="js/koalaeditor.js"></script>
+    <link rel="stylesheet" href="css/koalaeditor.css"/>
+
+    <script src="js/langs/pt_pt.js"></script>
+
+    <!-- Load Font Awesome -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 </head>
 <body>
 
-<header>
-
+<header id="mainHeader">
     <img id="logo" src="website_assets/images/logo.png"/>
-
+    <nav id="topNav">
+        <ul>
+            <li><a href="https://github.com/joaopluis/KoalaEditor" class="icon"><span class="fa fa-github"></span></a></li>
+        </ul>
+    </nav>
 </header>
 
 <div id="topBox">
@@ -31,51 +45,80 @@
     </div>
 </div>
 
-<h1>Examples</h1>
+<section id="examples">
+    <h1>Examples</h1>
 
-<h2><code>&lt;textarea&gt;</code></h2>
+    <h2>1. <code>&lt;textarea&gt;</code></h2>
 
-<textarea class="editable">
+<textarea id="editable">
     <p>Some dummy content in this <code>textarea</code>.</p>
 </textarea>
-<button id="destroy">Disable</button>
-<button id="enable" style="display: none">Enable</button>
+    <button id="destroy">Disable</button>
+    <button id="enable" style="display: none">Enable</button>
 
-<h2><code>&lt;div&gt;</code></h2>
+    <h2>2. <code>&lt;div&gt;</code></h2>
 
-<div class="editable2">
-    <p>Some dummy content in this <code>div</code>.</p>
-</div>
-<button id="destroy2">Disable</button>
-<button id="enable2" style="display: none">Enable</button>
+    <div id="editable2">
+        <p>Some dummy content in this <code>div</code>.</p>
+    </div>
+    <button id="destroy2">Disable</button>
+    <button id="enable2" style="display: none">Enable</button>
 
+    <h2>3. No toolbar</h2>
+    <div id="editable3">
+        <p>Some dummy content in this <code>div</code>.</p>
+    </div>
+
+    <h2>4. Only some buttons</h2>
+    <div id="editable4">
+        <p>Some dummy content in this <code>div</code>.</p>
+    </div>
+
+    <h2>5. Now in Portuguese!</h2>
+    <div id="editable5">
+        <p>Algum conteúdo aleatório nesta <code>div</code>.</p>
+    </div>
+</section>
 
 <footer>&copy; <a href="#">João Luís</a> 2015</footer>
 
 <script>
     $('.mainEditable').koala();
-    $('.editable').koala();
+
+    $('#editable').koala();
     $('#destroy').click(function () {
-        $('.editable').koala().destroy();
+        $('#editable').koala().destroy();
         $(this).hide();
         $('#enable').show();
     });
     $('#enable').click(function () {
-        $('.editable').koala();
+        $('#editable').koala();
         $(this).hide();
         $('#destroy').show();
     });
 
-    $('.editable2').koala();
+    $('#editable2').koala();
     $('#destroy2').click(function () {
-        $('.editable2').koala().destroy();
+        $('#editable2').koala().destroy();
         $(this).hide();
         $('#enable2').show();
     });
     $('#enable2').click(function () {
-        $('.editable2').koala();
+        $('#editable2').koala();
         $(this).hide();
         $('#destroy2').show();
+    });
+
+    $('#editable3').koala({
+        toolbar: false
+    });
+
+    $('#editable4').koala({
+        buttons: ['bold', 'italic', 'underline', 'sep', 'code']
+    });
+
+    $('#editable5').koala({
+        language: "pt_pt"
     });
 </script>
 

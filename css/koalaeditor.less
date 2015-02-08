@@ -3,37 +3,38 @@
 @toolbar-background: #F7F7F7;
 @toolbar-button-color: #333;
 
-.ke-box{
+.ke-box {
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.ke-editor{
+.ke-editor {
   border: 1px solid @border-color;
   padding: 10px;
-  &:focus{
+  &:focus {
     outline: none;
   }
-  .editing-image{
+  .editing-image {
     outline: solid 1px @color;
     display: inline-block;
     position: relative;
-    
-    button{
+
+    button {
       position: absolute;
       bottom: 1em;
       right: 1em;
       background: @color;
       color: white;
       font-size: 14px;
-      border:none;
-      padding:0.5em;
+      border: none;
+      padding: 0.5em;
       cursor: pointer;
     }
   }
 }
-.ke-toolbar{
+
+.ke-toolbar {
   border: 1px solid @border-color;
   border-bottom: none;
   background: @toolbar-background;
@@ -41,16 +42,13 @@
   flex-wrap: wrap;
   font-family: Lato, Arial, Helvetica, sans-serif;
 
-  .ke-button-container{
-    display:flex;
+  .ke-button-container {
+    display: flex;
     position: relative;
     font-size: 16px;
-    &:hover .ke-dropdown{
-      display: flex;
-    }
   }
 
-  .ke-toolbar-button{
+  .ke-toolbar-button {
     font-size: 16px;
     line-height: 1em;
     min-width: 2.2em;
@@ -58,51 +56,52 @@
     border: none;
     font-family: Lato, sans-serif;
     font-weight: bold;
-    padding:0.6em;
+    padding: 0.6em;
     background: none;
     cursor: pointer;
     transition: all .3s;
     border-radius: 0;
     margin: 0;
     color: @toolbar-button-color;
-    &:hover{
+    &:hover {
       background: @color;
       color: white;
     }
-    &:focus{
+    &:focus {
       outline: none;
     }
-    &.active{
+    &.active {
       color: @color;
     }
   }
 
-  .sep{
+  .sep {
     width: 1px;
     background: @border-color;
   }
 
 }
 
-.ke-dropdown{
+.ke-dropdown {
   background: white;
   border: 1px solid @border-color;
   position: absolute;
-  left:0;
+  left: 0;
   top: 2em;
-  margin-top: -1px;
+  //margin-top: -1px;
   //min-width: 3em;
   display: none;
-  ul{
+  text-align: left;
+  ul {
     margin: 0;
     padding: 0;
     list-style: none;
-    li{
+    li {
       padding: 0.6em;
       transition: all .5s;
       white-space: nowrap;
       color: black;
-      &:hover{
+      &:hover {
         background: @color;
         color: white;
       }
@@ -110,9 +109,9 @@
   }
 }
 
-.ke-code{
+.ke-code {
   border: 1px solid @border-color;
-  margin:0;
+  margin: 0;
   padding: 10px;
   font-family: monospace;
   background: #444;

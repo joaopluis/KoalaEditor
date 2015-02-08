@@ -4,10 +4,34 @@ body {
   margin: 0;
   padding: 2em;
 }
-#logo {
+#mainHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 2em;
+}
+#logo {
   height: 3.4em;
   display: block;
+}
+#topNav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+}
+#topNav ul li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+#topNav ul li a {
+  color: #333;
+  padding: 0 1rem;
+  line-height: 2rem;
+  text-decoration: none;
+}
+#topNav ul li a.icon {
+  font-size: 1.8em;
 }
 #topBox {
   margin: 0 -2rem;
@@ -16,6 +40,7 @@ body {
   text-align: center;
   padding: 2em;
   color: white;
+  text-shadow: 0 0 0.4em rgba(0, 0, 0, 0.25);
   background-size: cover;
   background-position: center;
   background: url(images/bamboo.jpg);
