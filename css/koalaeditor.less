@@ -3,6 +3,11 @@
 @toolbar-background: #F7F7F7;
 @toolbar-button-color: #333;
 
+.ke-font(){
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+}
+
 .ke-box {
   display: flex;
   flex-direction: column;
@@ -40,21 +45,19 @@
   background: @toolbar-background;
   display: flex;
   flex-wrap: wrap;
-  font-family: Lato, Arial, Helvetica, sans-serif;
+  .ke-font();
 
   .ke-button-container {
     display: flex;
     position: relative;
-    font-size: 16px;
   }
 
   .ke-toolbar-button {
-    font-size: 16px;
+    .ke-font();
     line-height: 1em;
     min-width: 2.2em;
     text-align: center;
     border: none;
-    font-family: Lato, sans-serif;
     font-weight: bold;
     padding: 0.6em;
     background: none;
@@ -80,6 +83,92 @@
     background: @border-color;
   }
 
+}
+
+.ke-prompt{
+  position: absolute;
+  background: white;
+  border: 1px solid @border-color;
+  border-radius: 0.2em;
+  min-width: 250px;
+  max-width: 100%;
+  top: 2em;
+  left: 0;
+  z-index: 99;
+  display: none;
+
+  .ke-arrow{
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -8px;
+    left:0.6em;
+    border-style: solid;
+    border-width: 0 8px 8px 8px;
+    border-color: transparent transparent @border-color transparent;
+    &:after{
+      position: absolute;
+      top: 1px;
+      left: -8px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 8px 8px 8px;
+      border-color: transparent transparent white transparent;
+      content: '';
+    }
+  }
+
+  .ke-prompt-header{
+    padding:0.8em 1em;
+    border-bottom: 1px solid @border-color;
+    h1{
+      font-size: 1em;
+      font-weight: normal;
+      margin:0;
+      padding: 0;
+      color: black;
+    }
+  }
+  .ke-prompt-body{
+    padding: 0 1em;
+    p{
+      margin: 0.8em 0;
+    }
+    label{
+      display: block;
+      margin-bottom: 0.4em;
+      font-weight: bold;
+    }
+  }
+  .ke-prompt-input{
+    border: 1px solid @border-color;
+    border-radius: 0.2em;
+    .ke-font();
+    padding: 0.5em;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all .5s;
+    &:focus{
+      outline: none;
+      border-color: @color;
+    }
+  }
+  .ke-prompt-footer{
+    padding: 0 1em 0.8em;
+    text-align: right;
+    margin: 0;
+    button{
+      .ke-font();
+      display: inline-block;
+      border: none;
+      color: white;
+      background-color: @color;
+      padding: 0.4em 0.6em;
+      border-radius: 0.2em;
+      margin:0;
+    }
+  }
 }
 
 .ke-dropdown {

@@ -76,16 +76,14 @@ var Koala = Koala || {};
     });
 
     Koala.addCommand("formatBlock", function (editor, value) {
-        var selection = window.getSelection();
-        var blockElement = $(window.getSelection().focusNode).blockParent();
+        var blockElement = $(editor.getSelection().focusNode).blockParent();
         if (blockElement.is(value)) {
             document.execCommand("formatBlock", false, "<p>");
         } else {
             document.execCommand("formatBlock", false, "<" + value + ">");
         }
-    }, function (value) {
-        var selection = window.getSelection();
-        var blockElement = $(window.getSelection().focusNode).blockParent();
+    }, function (editor, value) {
+        var blockElement = $(editor.getSelection().focusNode).blockParent();
         return blockElement.is(value);
     });
 
@@ -153,9 +151,6 @@ var Koala = Koala || {};
         if (!value) {
             value = this.options.value;
         }
-        if (this.options.prompt) {
-            value = prompt(editor.getTranslation(this.options.prompt));
-        }
         if (this.options.command) {
             Koala.getCommand(this.options.command).execute(editor, value);
         }
@@ -194,6 +189,41 @@ var Koala = Koala || {};
             });
             dropdown.append(ddList);
             btnDiv.append(dropdown);
+        }
+        if(this.options.prompt){
+            var promptDiv = $('<div/>');
+            promptDiv.addClass("ke-prompt");
+
+            promptDiv.append("<div class=\"ke-arrow\"></div>");
+
+            promptDiv.append("<header class=\"ke-prompt-header\"><h1>"+editor.getTranslation(this.options.prompt)+"</h1></header>");
+
+            var promptBody = $('<div/>');
+            promptBody.addClass("ke-prompt-body");
+            var promptP = $('<p/>');
+            var promptInput = $('<input />');
+            promptInput.addClass("ke-prompt-input");
+            promptInput.attr("type", "text");
+            promptP.append(promptInput);
+            promptBody.append(promptP)
+            promptDiv.append(promptBody);
+
+            var promptFooter = $('<footer />');
+            promptFooter.addClass("ke-prompt-footer");
+            var promptBtn = $('<button />');
+            promptBtn.text(editor.getTranslation("OK"));
+            promptFooter.append(promptBtn);
+            promptDiv.append(promptFooter);
+            btnDiv.append(promptDiv);
+
+            promptBtn.on('click', function(){
+                editor.range = editor.tmpRange;
+                editor.resetSelection();
+                Koala.getCommand(btn.options.command).execute(editor, promptInput.val());
+                promptDiv.slideUp(function(){
+                    promptInput.val("");
+                });
+            });
         }
         return btnDiv;
     };
@@ -385,10 +415,15 @@ var Koala = Koala || {};
             /**
              * Act on button clicks.
              */
-            this.toolbar.on('mousedown', 'button', function (evt) {
-                console.log("button mousedown")
+            this.toolbar.on('click', '.ke-toolbar-button', function (evt) {
+                console.log("button mousedown");
+                editor.resetSelection();
+                $('.ke-prompt, .ke-dropdown').not($(this).parent().find('.ke-prompt, .ke-dropdown')).slideUp();
                 if (Koala.getButton($(this).attr('data-name')).options.options) {
                     $(this).parent().children(".ke-dropdown").slideToggle();
+                } else if(Koala.getButton($(this).attr('data-name')).options.prompt){
+                    editor.tmpRange = editor.range;
+                    $(this).parent().children(".ke-prompt").slideToggle();
                 } else {
                     Koala.getButton($(this).attr('data-name')).do(editor, null);
                 }
@@ -397,9 +432,12 @@ var Koala = Koala || {};
             /**
              * Act on dropdown item click.
              */
-            this.toolbar.on('mousedown', '.ke-dropdown li', function (e) {
-                console.log("drop li mousedown")
+            this.toolbar.on('click', '.ke-dropdown li', function (e) {
+                console.log("drop li mousedown");
+                editor.resetSelection();
                 Koala.getButton($(this).attr("data-button")).do(editor, $(this).attr("data-value"));
+                $(this).parents('.ke-dropdown').slideUp();
+
             });
         }
 
@@ -447,6 +485,7 @@ var Koala = Koala || {};
 
         // Handle images
         this.textWindow.on('click', 'img', function (e) {
+            e.stopPropagation();
             console.log("img click");
             $(this).addClass('selected');
             $(this).wrap('<div class="editing-image"></div>');
@@ -475,12 +514,12 @@ var Koala = Koala || {};
          */
         $(document).mouseup(function (e) {
             console.log("doc mouseup");
-            var container = $(".ke-dropdown, .ke-toolbar-button");
+            var container = $(".ke-dropdown, .ke-prompt, .ke-toolbar-button");
 
             if (!container.is(e.target) // if the target of the click isn't the container...
                 && container.has(e.target).length === 0) // ... nor a descendant of the container
             {
-                $('.ke-dropdown').slideUp();
+                $('.ke-dropdown, .ke-prompt').slideUp();
             }
         });
 
@@ -497,6 +536,8 @@ var Koala = Koala || {};
          * Act on selectchange
          */
         this.textWindow.on("selectchange", function (evt) {
+            editor.range = editor.getSelection().getRangeAt(0);
+            console.log(editor.range);
             editor.updateToolbar();
         });
 
@@ -550,6 +591,12 @@ var Koala = Koala || {};
     Koala.Editor.prototype.getSelection = function () {
         return window.getSelection();
     };
+
+    Koala.Editor.prototype.resetSelection = function(){
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(this.range);
+    }
 
     Koala.Editor.prototype.executeCommand = function (name, value) {
         Koala.getCommand(name).execute(this, value);

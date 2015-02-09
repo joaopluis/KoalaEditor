@@ -32,20 +32,20 @@
   background: #f7f7f7;
   display: flex;
   flex-wrap: wrap;
+  font-size: 16px;
   font-family: Lato, Arial, Helvetica, sans-serif;
 }
 .ke-toolbar .ke-button-container {
   display: flex;
   position: relative;
-  font-size: 16px;
 }
 .ke-toolbar .ke-toolbar-button {
   font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
   line-height: 1em;
   min-width: 2.2em;
   text-align: center;
   border: none;
-  font-family: Lato, sans-serif;
   font-weight: bold;
   padding: 0.6em;
   background: none;
@@ -68,6 +68,91 @@
 .ke-toolbar .sep {
   width: 1px;
   background: #cccccc;
+}
+.ke-prompt {
+  position: absolute;
+  background: white;
+  border: 1px solid #cccccc;
+  border-radius: 0.2em;
+  min-width: 250px;
+  max-width: 100%;
+  top: 2em;
+  left: 0;
+  z-index: 99;
+  display: none;
+}
+.ke-prompt .ke-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -8px;
+  left: 0.6em;
+  border-style: solid;
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent #cccccc transparent;
+}
+.ke-prompt .ke-arrow:after {
+  position: absolute;
+  top: 1px;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent white transparent;
+  content: '';
+}
+.ke-prompt .ke-prompt-header {
+  padding: 0.8em 1em;
+  border-bottom: 1px solid #cccccc;
+}
+.ke-prompt .ke-prompt-header h1 {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  color: black;
+}
+.ke-prompt .ke-prompt-body {
+  padding: 0 1em;
+}
+.ke-prompt .ke-prompt-body p {
+  margin: 0.8em 0;
+}
+.ke-prompt .ke-prompt-body label {
+  display: block;
+  margin-bottom: 0.4em;
+  font-weight: bold;
+}
+.ke-prompt .ke-prompt-input {
+  border: 1px solid #cccccc;
+  border-radius: 0.2em;
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  padding: 0.5em;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all .5s;
+}
+.ke-prompt .ke-prompt-input:focus {
+  outline: none;
+  border-color: #77a2ad;
+}
+.ke-prompt .ke-prompt-footer {
+  padding: 0 1em 0.8em;
+  text-align: right;
+  margin: 0;
+}
+.ke-prompt .ke-prompt-footer button {
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  display: inline-block;
+  border: none;
+  color: white;
+  background-color: #77a2ad;
+  padding: 0.4em 0.6em;
+  border-radius: 0.2em;
+  margin: 0;
 }
 .ke-dropdown {
   background: white;
