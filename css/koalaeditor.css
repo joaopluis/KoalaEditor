@@ -15,16 +15,32 @@
   display: inline-block;
   position: relative;
 }
-.ke-editor .editing-image button {
+.ke-editor .editing-image .ke-img-btn-toolbar {
   position: absolute;
   bottom: 1em;
   right: 1em;
+}
+.ke-editor .editing-image .ke-img-btn-toolbar button {
   background: #77a2ad;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
+  font-family: Lato, Arial, Helvetica, sans-serif;
+  border-radius: 0em;
   border: none;
+  margin: 0;
   padding: 0.5em;
   cursor: pointer;
+}
+.ke-editor .editing-image .ke-img-btn-toolbar button.delete {
+  background: #B20000;
+}
+.ke-editor .editing-image .ke-img-btn-toolbar button:first-child {
+  border-top-left-radius: 0.3em;
+  border-bottom-left-radius: 0.3em;
+}
+.ke-editor .editing-image .ke-img-btn-toolbar button:last-child {
+  border-top-right-radius: 0.3em;
+  border-bottom-right-radius: 0.3em;
 }
 .ke-toolbar {
   border: 1px solid #cccccc;

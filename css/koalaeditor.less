@@ -3,7 +3,7 @@
 @toolbar-background: #F7F7F7;
 @toolbar-button-color: #333;
 
-.ke-font(){
+.ke-font() {
   font-size: 16px;
   font-family: Lato, Arial, Helvetica, sans-serif;
 }
@@ -25,17 +25,34 @@
     display: inline-block;
     position: relative;
 
-    button {
+    .ke-img-btn-toolbar {
       position: absolute;
       bottom: 1em;
       right: 1em;
-      background: @color;
-      color: white;
-      font-size: 14px;
-      border: none;
-      padding: 0.5em;
-      cursor: pointer;
+
+      button {
+        background: @color;
+        color: white;
+        .ke-font();
+        border-radius: 0em;
+        border: none;
+        margin: 0;
+        padding: 0.5em;
+        cursor: pointer;
+        &.delete {
+          background: #B20000;
+        }
+        &:first-child {
+          border-top-left-radius: 0.3em;
+          border-bottom-left-radius: 0.3em;
+        }
+        &:last-child {
+          border-top-right-radius: 0.3em;
+          border-bottom-right-radius: 0.3em;
+        }
+      }
     }
+
   }
 }
 
@@ -85,7 +102,7 @@
 
 }
 
-.ke-prompt{
+.ke-prompt {
   position: absolute;
   background: white;
   border: 1px solid @border-color;
@@ -97,16 +114,16 @@
   z-index: 99;
   display: none;
 
-  .ke-arrow{
+  .ke-arrow {
     position: absolute;
     width: 0;
     height: 0;
     top: -8px;
-    left:0.6em;
+    left: 0.6em;
     border-style: solid;
     border-width: 0 8px 8px 8px;
     border-color: transparent transparent @border-color transparent;
-    &:after{
+    &:after {
       position: absolute;
       top: 1px;
       left: -8px;
@@ -119,29 +136,29 @@
     }
   }
 
-  .ke-prompt-header{
-    padding:0.8em 1em;
+  .ke-prompt-header {
+    padding: 0.8em 1em;
     border-bottom: 1px solid @border-color;
-    h1{
+    h1 {
       font-size: 1em;
       font-weight: normal;
-      margin:0;
+      margin: 0;
       padding: 0;
       color: black;
     }
   }
-  .ke-prompt-body{
+  .ke-prompt-body {
     padding: 0 1em;
-    p{
+    p {
       margin: 0.8em 0;
     }
-    label{
+    label {
       display: block;
       margin-bottom: 0.4em;
       font-weight: bold;
     }
   }
-  .ke-prompt-input{
+  .ke-prompt-input {
     border: 1px solid @border-color;
     border-radius: 0.2em;
     .ke-font();
@@ -149,16 +166,16 @@
     width: 100%;
     box-sizing: border-box;
     transition: all .5s;
-    &:focus{
+    &:focus {
       outline: none;
       border-color: @color;
     }
   }
-  .ke-prompt-footer{
+  .ke-prompt-footer {
     padding: 0 1em 0.8em;
     text-align: right;
     margin: 0;
-    button{
+    button {
       .ke-font();
       display: inline-block;
       border: none;
@@ -166,7 +183,7 @@
       background-color: @color;
       padding: 0.4em 0.6em;
       border-radius: 0.2em;
-      margin:0;
+      margin: 0;
     }
   }
 }

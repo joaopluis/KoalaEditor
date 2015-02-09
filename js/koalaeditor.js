@@ -490,20 +490,27 @@ var Koala = Koala || {};
             $(this).addClass('selected');
             $(this).wrap('<div class="editing-image"></div>');
             var wrapper = $(this).parent();
-            console.log(wrapper);
-            var button = $('<button contenteditable="false">Edit</button>');
-            console.log(button);
-            wrapper.append(button);
+            var imgToolbar = $('<div class="ke-img-btn-toolbar"></div>');
+            wrapper.append(imgToolbar);
+            var editBtn = $('<button contenteditable="false"><span class="fa fa-fw fa-pencil"></span></button>');
+            var delBtn = $('<button class="delete" contenteditable="false"><span class="fa fa-fw fa-trash"></span></button>');
+            imgToolbar.append(editBtn).append(delBtn);
             img = $(this);
-            button.click(function () {
+            editBtn.click(function () {
                 width = prompt("Width");
                 img.css('width', parseInt(width));
+            });
+            delBtn.click(function(){
+                if(confirm(editor.getTranslation("Do you really want to remove this image?"))){
+                    wrapper.remove();
+                    editor.textWindow.trigger("contentchange");
+                }
             });
             /**/
         });
         this.textWindow.click(function (evt) {
             console.log("tw click")
-            $('.editing-image button').remove();
+            $('.ke-img-btn-toolbar').remove();
             $('img.selected').unwrap();
             $('img.selected').removeClass('selected');
         });

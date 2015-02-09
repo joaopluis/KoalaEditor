@@ -5,6 +5,8 @@ Koala.languages["pt_pt"] = {
     "Ordered list": "Lista ordenada",
     "Unordered list": "Lista",
     "Block Style": "Estilo de Bloco",
+    "Normal": "Normal",
+    "Heading 1": "Cabeçalho 1",
     "Align": "Alinhar",
     "Left": "Esquerda",
     "Center": "Centro",
@@ -17,5 +19,6 @@ Koala.languages["pt_pt"] = {
     "Remove link": "Remover ligação",
     "View code": "Ver código",
     "Image URL:": "URL da imagem:",
-    "Link URL:": "URL da ligação:"
+    "Link URL:": "URL da ligação:",
+    "Do you really want to remove this image?": "Quer mesmo remover esta imagem?"
 };
