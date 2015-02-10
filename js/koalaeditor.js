@@ -416,7 +416,6 @@ var Koala = Koala || {};
              * Act on button clicks.
              */
             this.toolbar.on('click', '.ke-toolbar-button', function (evt) {
-                console.log("button mousedown");
                 editor.resetSelection();
                 $('.ke-prompt, .ke-dropdown').not($(this).parent().find('.ke-prompt, .ke-dropdown')).slideUp();
                 if (Koala.getButton($(this).attr('data-name')).options.options) {
@@ -433,7 +432,6 @@ var Koala = Koala || {};
              * Act on dropdown item click.
              */
             this.toolbar.on('click', '.ke-dropdown li', function (e) {
-                console.log("drop li mousedown");
                 editor.resetSelection();
                 Koala.getButton($(this).attr("data-button")).do(editor, $(this).attr("data-value"));
                 $(this).parents('.ke-dropdown').slideUp();
@@ -484,9 +482,8 @@ var Koala = Koala || {};
 
 
         // Handle images
-        this.textWindow.on('click', 'img', function (e) {
+        /*this.textWindow.on('click', 'img', function (e) {
             e.stopPropagation();
-            console.log("img click");
             $(this).addClass('selected');
             $(this).wrap('<div class="editing-image"></div>');
             var wrapper = $(this).parent();
@@ -506,13 +503,59 @@ var Koala = Koala || {};
                     editor.textWindow.trigger("contentchange");
                 }
             });
-            /**/
         });
         this.textWindow.click(function (evt) {
-            console.log("tw click")
             $('.ke-img-btn-toolbar').remove();
             $('img.selected').unwrap();
             $('img.selected').removeClass('selected');
+        });
+        */
+
+        // Let's try some new Image Stuff!
+        this.textWindow.on('click', 'img', function (e) {
+            e.stopPropagation();
+            var img = $(this);
+            $(this).addClass('selected');
+            $(this).wrap('<div class="editing-image"></div>');
+            var wrapper = $(this).parent();
+            var handler = $('<div />');
+            handler.addClass('ke-img-handler ui-resizable-handle ui-resizable-se');
+            handler.attr("id", "seGrip");
+            wrapper.append(handler);
+            $(this).resizable({
+                aspectRatio: true,
+                handles: 'se'
+            });
+        });
+
+        this.textWindow.on('keyup', function(evt){
+            if ( evt.which == 8 ) {
+                if($('.editing-image')) {
+                    event.preventDefault();
+                    $('.editing-image').remove();
+                }
+            }
+        });
+
+        this.textWindow.on( 'mousedown', function (evt) {
+
+            var container = $('.editing-image');
+            if (!container.is(evt.target) // if the target of the click isn't the container...
+                && container.has(evt.target).length === 0) // ... nor a descendant of the container
+            {
+                var img = $('img.selected');
+                img.resizable( "destroy" );
+                $('.ke-img-handler').remove();
+                img.unwrap();
+                var w = img.css("width");
+                var h = img.css("height");
+                img.attr("style", "");
+                img.css("width", w);
+                img.css("height", h);
+                img.removeClass('selected');
+                editor.textWindow.trigger("contentchange");
+            }
+
         });
 
         /***
@@ -520,7 +563,6 @@ var Koala = Koala || {};
          * - Slide up dropdowns
          */
         $(document).mouseup(function (e) {
-            console.log("doc mouseup");
             var container = $(".ke-dropdown, .ke-prompt, .ke-toolbar-button");
 
             if (!container.is(e.target) // if the target of the click isn't the container...
@@ -544,7 +586,6 @@ var Koala = Koala || {};
          */
         this.textWindow.on("selectchange", function (evt) {
             editor.range = editor.getSelection().getRangeAt(0);
-            console.log(editor.range);
             editor.updateToolbar();
         });
 
@@ -600,9 +641,11 @@ var Koala = Koala || {};
     };
 
     Koala.Editor.prototype.resetSelection = function(){
-        var sel = window.getSelection();
-        sel.removeAllRanges();
-        sel.addRange(this.range);
+        if(this.range) {
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(this.range);
+        }
     }
 
     Koala.Editor.prototype.executeCommand = function (name, value) {

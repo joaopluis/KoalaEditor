@@ -1,7 +1,9 @@
-@color: #77A2AD;
+@accent-color: #77A2AD;
+@accent-contrast-color: white;
 @border-color: #CCC;
 @toolbar-background: #F7F7F7;
 @toolbar-button-color: #333;
+@toolbar-button-color-hover: white;
 
 .ke-font() {
   font-size: 16px;
@@ -20,37 +22,23 @@
   &:focus {
     outline: none;
   }
+
+  img.selected{
+    //outline: 1px solid @color;
+  }
   .editing-image {
-    outline: solid 1px @color;
+    outline: dashed 1px @accent-color;
     display: inline-block;
     position: relative;
 
-    .ke-img-btn-toolbar {
+    .ke-img-handler{
       position: absolute;
-      bottom: 1em;
-      right: 1em;
-
-      button {
-        background: @color;
-        color: white;
-        .ke-font();
-        border-radius: 0em;
-        border: none;
-        margin: 0;
-        padding: 0.5em;
-        cursor: pointer;
-        &.delete {
-          background: #B20000;
-        }
-        &:first-child {
-          border-top-left-radius: 0.3em;
-          border-bottom-left-radius: 0.3em;
-        }
-        &:last-child {
-          border-top-right-radius: 0.3em;
-          border-bottom-right-radius: 0.3em;
-        }
-      }
+      bottom: -2px;
+      right: -2px;
+      width: 10px;
+      height: 10px;
+      background: @accent-color;
+      //cursor: nwse-resize;
     }
 
   }
@@ -84,22 +72,20 @@
     margin: 0;
     color: @toolbar-button-color;
     &:hover {
-      background: @color;
-      color: white;
+      background: @accent-color;
+      color: @toolbar-button-color-hover;
     }
     &:focus {
       outline: none;
     }
     &.active {
-      color: @color;
+      color: @accent-color;
     }
   }
-
   .sep {
     width: 1px;
     background: @border-color;
   }
-
 }
 
 .ke-prompt {
@@ -140,11 +126,12 @@
     padding: 0.8em 1em;
     border-bottom: 1px solid @border-color;
     h1 {
-      font-size: 1em;
-      font-weight: normal;
+      font-size: 1em !important;
+      font-weight: normal !important;
       margin: 0;
       padding: 0;
       color: black;
+      text-align: left;
     }
   }
   .ke-prompt-body {
@@ -168,7 +155,7 @@
     transition: all .5s;
     &:focus {
       outline: none;
-      border-color: @color;
+      border-color: @accent-color;
     }
   }
   .ke-prompt-footer {
@@ -179,8 +166,8 @@
       .ke-font();
       display: inline-block;
       border: none;
-      color: white;
-      background-color: @color;
+      color: @accent-contrast-color;
+      background-color: @accent-color;
       padding: 0.4em 0.6em;
       border-radius: 0.2em;
       margin: 0;
@@ -208,8 +195,8 @@
       white-space: nowrap;
       color: black;
       &:hover {
-        background: @color;
-        color: white;
+        background: @accent-color;
+        color: @accent-contrast-color;
       }
     }
   }

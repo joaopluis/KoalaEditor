@@ -1,0 +1,72 @@
+@accent-color: #77A2AD;
+@accent-contrast-color: white;
+@border-color: #333;
+@toolbar-background: #333;
+@toolbar-button-color: white;
+@toolbar-button-color-hover: #333;
+
+.ke-box.dark-koala {
+
+  .ke-editor {
+    border-color: @border-color;
+    .editing-image {
+      outline-color: @accent-color;
+      .ke-img-handler {
+        background: @accent-color;
+      }
+
+    }
+  }
+  .ke-toolbar {
+    border-color: @border-color;
+    background: @toolbar-background;
+    .ke-toolbar-button {
+      color: @toolbar-button-color;
+      &:hover {
+        background: @accent-color;
+        color: @toolbar-button-color-hover;
+      }
+      &.active {
+        color: @accent-color;
+      }
+    }
+    .sep {
+      background: @border-color;
+    }
+  }
+  .ke-prompt {
+    border-color: @border-color;
+    .ke-arrow {
+      border-color: transparent transparent @border-color transparent;
+    }
+    .ke-prompt-header {
+      border-bottom-color: @border-color;
+    }
+    .ke-prompt-input {
+      border-color: @border-color;
+      &:focus {
+        border-color: @accent-color;
+      }
+    }
+    .ke-prompt-footer {
+      button {
+        color: @accent-contrast-color;
+        background-color: @accent-color;
+      }
+    }
+  }
+  .ke-dropdown {
+    border-color: @border-color;
+    ul {
+      li {
+        &:hover {
+          background: @accent-color;
+          color: @accent-contrast-color;
+        }
+      }
+    }
+  }
+  .ke-code {
+    border-color: @border-color;
+  }
+}

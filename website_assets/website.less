@@ -94,12 +94,22 @@ h2 {
   color: #77A2AD;
 }
 
-code {
-  display: inline-block;
-  padding: 0.3em 0.4em 0.2em;
+.code(){
   border-radius: 0.3em;
   background: lighten(@color, 40%);
   border: dashed 1px @color;
+}
+
+code {
+  .code();
+  display: inline-block;
+  padding: 0.3em 0.4em 0.2em;
+}
+
+pre{
+  .code();
+  display: block;
+  padding: 1em;
 }
 
 textarea {
