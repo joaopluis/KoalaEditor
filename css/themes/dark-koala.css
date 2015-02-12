@@ -39,6 +39,9 @@
 .ke-box.dark-koala .ke-prompt .ke-prompt-input:focus {
   border-color: #77a2ad;
 }
+.ke-box.dark-koala .ke-prompt .ke-drop-area {
+  border-color: #77a2ad;
+}
 .ke-box.dark-koala .ke-prompt .ke-prompt-footer button {
   color: white;
   background-color: #77a2ad;
@@ -53,3 +56,4 @@
 .ke-box.dark-koala .ke-code {
   border-color: #333333;
 }
+/*# sourceMappingURL=dark-koala.css.map */

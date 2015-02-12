@@ -111,6 +111,13 @@
   color: black;
   text-align: left;
 }
+.ke-prompt .ke-upload-progress {
+  height: 1.4em;
+  line-height: 1.4em;
+  color: white;
+  background-color: green;
+  text-align: right;
+}
 .ke-prompt .ke-prompt-body {
   padding: 0 1em;
 }
@@ -135,6 +142,24 @@
 .ke-prompt .ke-prompt-input:focus {
   outline: none;
   border-color: #77a2ad;
+}
+.ke-prompt .ke-drop-area {
+  border: 3px dashed #77a2ad;
+  text-align: center;
+  margin: 0.8em 0;
+  padding: 0.8em;
+  border-radius: 0.3em;
+  transition: background .3s;
+}
+.ke-prompt .ke-drop-area.dragging {
+  background: #EEE;
+}
+.ke-prompt .ke-drop-area p {
+  margin: 0;
+  padding: 0;
+}
+.ke-prompt .ke-drop-area span {
+  font-size: 0.8em;
 }
 .ke-prompt .ke-prompt-footer {
   padding: 0 1em 0.8em;
@@ -185,3 +210,4 @@
   color: #CCC;
   display: none;
 }
+/*# sourceMappingURL=koalaeditor.css.map */

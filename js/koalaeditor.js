@@ -2,6 +2,8 @@ var Koala = Koala || {};
 
 (function ($) {
 
+    $.event.props.push('dataTransfer');
+
     $.fn.blockParent = function () {
         return this.parents().filter(function () {
             return $(this).css("display") === "block";
@@ -9,6 +11,18 @@ var Koala = Koala || {};
     };
 
     Koala.languages = [];
+
+    Koala.upload = function (file, uploadURL, onload, loadend, progress) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("post", uploadURL, true);
+        xhr.upload.addEventListener("progress", progress, false);
+        xhr.onload = onload;
+        xhr.addEventListener("loadend", loadend, false);
+        var fdata = new FormData();
+        fdata.append("file", file);
+        xhr.send(fdata);
+
+    }
 
     /**
      * Command class
@@ -190,17 +204,87 @@ var Koala = Koala || {};
             dropdown.append(ddList);
             btnDiv.append(dropdown);
         }
-        if(this.options.prompt){
+        if (this.options.prompt) {
             var promptDiv = $('<div/>');
             promptDiv.addClass("ke-prompt");
 
             promptDiv.append("<div class=\"ke-arrow\"></div>");
 
-            promptDiv.append("<header class=\"ke-prompt-header\"><h1>"+editor.getTranslation(this.options.prompt)+"</h1></header>");
+            promptDiv.append("<header class=\"ke-prompt-header\"><h1>" + editor.getTranslation(this.options.label) + "</h1></header>");
 
             var promptBody = $('<div/>');
             promptBody.addClass("ke-prompt-body");
+
+            if (this.options.filePrompt && editor.settings.uploadURL) {
+
+                var dropArea = $('<div />');
+                dropArea.addClass("ke-drop-area");
+                dropArea.append($("<p />").text(editor.getTranslation("Drop file")));
+                dropArea.append($("<span />").text("(" + editor.getTranslation("or click") + ")"));
+                var fileInput = $('<input type="file" />');
+                if (this.options.accepts) {
+                    fileInput.attr("accept", this.options.accepts);
+                }
+                promptBody.append(dropArea);
+                var progressEl = $('<div />').addClass("ke-upload-progress").hide();
+                promptDiv.append(progressEl);
+
+                function doUpload(file) {
+                    promptBody.slideUp();
+                    promptFooter.slideUp();
+                    progressEl.slideDown();
+                    Koala.upload(file, editor.settings.uploadURL, function () {
+                        result = JSON.parse(this.responseText);
+                        Koala.getCommand(btn.options.command).execute(editor, result.link);
+                    }, function () {
+                        promptDiv.slideUp(function(){
+                            promptBody.show();
+                            promptFooter.show();
+                            progressEl.hide();
+                        });
+                    }, function (event) {
+                        if (event.lengthComputable) {
+                            progressEl.css("width", (event.loaded / event.total) * 100 + "%");
+                            progressEl.text(((event.loaded / event.total) * 100).toFixed(2) + "%");
+                            progressEl.attr("aria-valuenow", ((event.loaded / event.total) * 100).toFixed(2));
+                        }
+                        else {
+                            alert("Failed to compute file upload length");
+                        }
+                    });
+                }
+
+                dropArea.on("dragover", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $(this).addClass('dragging');
+                });
+                dropArea.on("dragleave", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    $(this).removeClass('dragging');
+                });
+
+                dropArea.on("drop", function (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    $(this).removeClass('dragging');
+                    doUpload(event.dataTransfer.files[0]);
+                });
+
+                dropArea.on("click", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    fileInput.trigger("click");
+                });
+                fileInput.on("change", function (event) {
+                    file = $(this)[0].files[0];
+                    doUpload(file);
+                });
+            }
+
             var promptP = $('<p/>');
+            promptP.append($("<label/>").text(editor.getTranslation(this.options.prompt)));
             var promptInput = $('<input />');
             promptInput.addClass("ke-prompt-input");
             promptInput.attr("type", "text");
@@ -216,11 +300,11 @@ var Koala = Koala || {};
             promptDiv.append(promptFooter);
             btnDiv.append(promptDiv);
 
-            promptBtn.on('click', function(){
+            promptBtn.on('click', function () {
                 editor.range = editor.tmpRange;
                 editor.resetSelection();
                 Koala.getCommand(btn.options.command).execute(editor, promptInput.val());
-                promptDiv.slideUp(function(){
+                promptDiv.slideUp(function () {
                     promptInput.val("");
                 });
             });
@@ -325,10 +409,16 @@ var Koala = Koala || {};
     Koala.addButton({name: "redo", label: "Redo", icon: "fa-repeat", command: "redo"});
 
     Koala.addButton({
-        name: "image", label: "Insert image", icon: "fa-image", command: "image", prompt: "Image URL:"
+        name: "image",
+        label: "Insert image",
+        icon: "fa-image",
+        command: "image",
+        prompt: "Image URL:",
+        filePrompt: true,
+        accepts: "image/*"
     });
     Koala.addButton({
-        name: "link", label: "Link", icon: "fa-link", command: "link", prompt: "Link URL:"
+        name: "link", label: "Insert link", icon: "fa-link", command: "link", prompt: "Link URL:"
     });
     Koala.addButton({
         name: "unlink",
@@ -420,7 +510,7 @@ var Koala = Koala || {};
                 $('.ke-prompt, .ke-dropdown').not($(this).parent().find('.ke-prompt, .ke-dropdown')).slideUp();
                 if (Koala.getButton($(this).attr('data-name')).options.options) {
                     $(this).parent().children(".ke-dropdown").slideToggle();
-                } else if(Koala.getButton($(this).attr('data-name')).options.prompt){
+                } else if (Koala.getButton($(this).attr('data-name')).options.prompt) {
                     editor.tmpRange = editor.range;
                     $(this).parent().children(".ke-prompt").slideToggle();
                 } else {
@@ -483,33 +573,33 @@ var Koala = Koala || {};
 
         // Handle images
         /*this.textWindow.on('click', 'img', function (e) {
-            e.stopPropagation();
-            $(this).addClass('selected');
-            $(this).wrap('<div class="editing-image"></div>');
-            var wrapper = $(this).parent();
-            var imgToolbar = $('<div class="ke-img-btn-toolbar"></div>');
-            wrapper.append(imgToolbar);
-            var editBtn = $('<button contenteditable="false"><span class="fa fa-fw fa-pencil"></span></button>');
-            var delBtn = $('<button class="delete" contenteditable="false"><span class="fa fa-fw fa-trash"></span></button>');
-            imgToolbar.append(editBtn).append(delBtn);
-            img = $(this);
-            editBtn.click(function () {
-                width = prompt("Width");
-                img.css('width', parseInt(width));
-            });
-            delBtn.click(function(){
-                if(confirm(editor.getTranslation("Do you really want to remove this image?"))){
-                    wrapper.remove();
-                    editor.textWindow.trigger("contentchange");
-                }
-            });
-        });
-        this.textWindow.click(function (evt) {
-            $('.ke-img-btn-toolbar').remove();
-            $('img.selected').unwrap();
-            $('img.selected').removeClass('selected');
-        });
-        */
+         e.stopPropagation();
+         $(this).addClass('selected');
+         $(this).wrap('<div class="editing-image"></div>');
+         var wrapper = $(this).parent();
+         var imgToolbar = $('<div class="ke-img-btn-toolbar"></div>');
+         wrapper.append(imgToolbar);
+         var editBtn = $('<button contenteditable="false"><span class="fa fa-fw fa-pencil"></span></button>');
+         var delBtn = $('<button class="delete" contenteditable="false"><span class="fa fa-fw fa-trash"></span></button>');
+         imgToolbar.append(editBtn).append(delBtn);
+         img = $(this);
+         editBtn.click(function () {
+         width = prompt("Width");
+         img.css('width', parseInt(width));
+         });
+         delBtn.click(function(){
+         if(confirm(editor.getTranslation("Do you really want to remove this image?"))){
+         wrapper.remove();
+         editor.textWindow.trigger("contentchange");
+         }
+         });
+         });
+         this.textWindow.click(function (evt) {
+         $('.ke-img-btn-toolbar').remove();
+         $('img.selected').unwrap();
+         $('img.selected').removeClass('selected');
+         });
+         */
 
         // Let's try some new Image Stuff!
         this.textWindow.on('click', 'img', function (e) {
@@ -528,23 +618,23 @@ var Koala = Koala || {};
             });
         });
 
-        this.textWindow.on('keyup', function(evt){
-            if ( evt.which == 8 ) {
-                if($('.editing-image')) {
+        this.textWindow.on('keyup', function (evt) {
+            if (evt.which == 8) {
+                if ($('.editing-image')) {
                     event.preventDefault();
                     $('.editing-image').remove();
                 }
             }
         });
 
-        this.textWindow.on( 'mousedown', function (evt) {
+        this.textWindow.on('mousedown', function (evt) {
 
             var container = $('.editing-image');
             if (!container.is(evt.target) // if the target of the click isn't the container...
                 && container.has(evt.target).length === 0) // ... nor a descendant of the container
             {
                 var img = $('img.selected');
-                img.resizable( "destroy" );
+                img.resizable("destroy");
                 $('.ke-img-handler').remove();
                 img.unwrap();
                 var w = img.css("width");
@@ -640,8 +730,8 @@ var Koala = Koala || {};
         return window.getSelection();
     };
 
-    Koala.Editor.prototype.resetSelection = function(){
-        if(this.range) {
+    Koala.Editor.prototype.resetSelection = function () {
+        if (this.range) {
             var sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(this.range);
@@ -665,8 +755,8 @@ var Koala = Koala || {};
         }
     };
 
-    Koala.Editor.prototype.getTranslation = function(string){
-        if (this.settings.language && Koala.languages[this.settings.language][string]){
+    Koala.Editor.prototype.getTranslation = function (string) {
+        if (this.settings.language && Koala.languages[this.settings.language][string]) {
             return Koala.languages[this.settings.language][string];
         }
         return string;

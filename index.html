@@ -74,43 +74,53 @@
 
     <pre>$("#editable2").koala();</pre>
 
-    <h2>3. No toolbar</h2>
+    <h2>3. With image upload</h2>
 
     <div id="editable3">
         <p>Some dummy content in this <code>div</code>.</p>
     </div>
 
     <pre>$("#editable3").koala({
-    toolbar: false
+    uploadURL: "upload.php"
 });</pre>
 
-    <h2>4. Only some buttons</h2>
+    <h2>4. No toolbar</h2>
 
     <div id="editable4">
         <p>Some dummy content in this <code>div</code>.</p>
     </div>
 
     <pre>$("#editable4").koala({
-    buttons: ['bold', 'italic', 'underline', 'sep', 'code']
+    toolbar: false
 });</pre>
 
-    <h2>5. The dark side</h2>
+    <h2>5. Only some buttons</h2>
 
     <div id="editable5">
         <p>Some dummy content in this <code>div</code>.</p>
     </div>
 
     <pre>$("#editable5").koala({
-    theme: "dark-koala"
+    buttons: ['bold', 'italic', 'underline', 'sep', 'code']
 });</pre>
 
-    <h2>6. Now in Portuguese!</h2>
+    <h2>6. The dark side</h2>
 
     <div id="editable6">
-        <p>Algum conteúdo aleatório nesta <code>div</code>.</p>
+        <p>Some dummy content in this <code>div</code>.</p>
     </div>
 
     <pre>$("#editable6").koala({
+    theme: "dark-koala"
+});</pre>
+
+    <h2>7. Now in Portuguese!</h2>
+
+    <div id="editable7">
+        <p>Algum conteúdo aleatório nesta <code>div</code>.</p>
+    </div>
+
+    <pre>$("#editable7").koala({
     language: "pt_pt"
 });</pre>
 </section>
@@ -146,18 +156,22 @@
     });
 
     $('#editable3').koala({
-        toolbar: false
+        uploadURL: "server_scripts/image_upload.php"
     });
 
     $('#editable4').koala({
-        buttons: ['bold', 'italic', 'underline', 'sep', 'code']
+        toolbar: false
     });
 
     $('#editable5').koala({
-        theme: "dark-koala"
+        buttons: ['bold', 'italic', 'underline', 'sep', 'code']
     });
 
     $('#editable6').koala({
+        theme: "dark-koala"
+    });
+
+    $('#editable7').koala({
         language: "pt_pt"
     });
 </script>

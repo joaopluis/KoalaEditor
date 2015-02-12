@@ -15,10 +15,11 @@ Koala.languages["pt_pt"] = {
     "Undo": "Desfazer",
     "Redo": "Refazer",
     "Insert image": "Inserir imagem",
-    "Link": "Ligação",
+    "Insert link": "Inserir ligação",
     "Remove link": "Remover ligação",
     "View code": "Ver código",
     "Image URL:": "URL da imagem:",
     "Link URL:": "URL da ligação:",
-    "Do you really want to remove this image?": "Quer mesmo remover esta imagem?"
+    "Drop file": "Largue o ficheiro",
+    "or click": "ou clique"
 };

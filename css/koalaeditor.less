@@ -134,6 +134,13 @@
       text-align: left;
     }
   }
+  .ke-upload-progress{
+    height:1.4em;
+    line-height: 1.4em;
+    color: white;
+    background-color: green;
+    text-align: right;
+  }
   .ke-prompt-body {
     padding: 0 1em;
     p {
@@ -156,6 +163,24 @@
     &:focus {
       outline: none;
       border-color: @accent-color;
+    }
+  }
+  .ke-drop-area{
+    border: 3px dashed @accent-color;
+    text-align: center;
+    margin: 0.8em 0;
+    padding:0.8em;
+    border-radius: 0.3em;
+    transition: background .3s;
+    &.dragging{
+      background: #EEE;
+    }
+    p{
+      margin: 0;
+      padding:0;
+    }
+    span{
+      font-size: 0.8em;
     }
   }
   .ke-prompt-footer {
