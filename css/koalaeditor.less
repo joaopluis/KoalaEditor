@@ -1,4 +1,8 @@
-@accent-color: #77A2AD;
+/*
+ * Koala Editor main LESS file
+ */
+
+@accent-color: #78A3AD;
 @accent-contrast-color: white;
 @border-color: #CCC;
 @toolbar-background: #F7F7F7;
@@ -8,6 +12,14 @@
 .ke-font() {
   font-size: 16px;
   font-family: Lato, Arial, Helvetica, sans-serif;
+}
+
+.ke-reset(){
+  text-align: left;
+  font-weight: normal;
+  .ke-font();
+  text-shadow: none;
+  color: black;
 }
 
 .ke-box {
@@ -23,7 +35,7 @@
     outline: none;
   }
 
-  img.selected{
+  img.selected {
     //outline: 1px solid @color;
   }
   .editing-image {
@@ -31,7 +43,7 @@
     display: inline-block;
     position: relative;
 
-    .ke-img-handler{
+    .ke-img-handler {
       position: absolute;
       bottom: -2px;
       right: -2px;
@@ -50,7 +62,7 @@
   background: @toolbar-background;
   display: flex;
   flex-wrap: wrap;
-  .ke-font();
+  .ke-reset();
 
   .ke-button-container {
     display: flex;
@@ -134,8 +146,8 @@
       text-align: left;
     }
   }
-  .ke-upload-progress{
-    height:1.4em;
+  .ke-upload-progress {
+    height: 1.4em;
     line-height: 1.4em;
     color: white;
     background-color: green;
@@ -165,21 +177,21 @@
       border-color: @accent-color;
     }
   }
-  .ke-drop-area{
+  .ke-drop-area {
     border: 3px dashed @accent-color;
     text-align: center;
     margin: 0.8em 0;
-    padding:0.8em;
+    padding: 0.8em;
     border-radius: 0.3em;
     transition: background .3s;
-    &.dragging{
+    &.dragging {
       background: #EEE;
     }
-    p{
+    p {
       margin: 0;
-      padding:0;
+      padding: 0;
     }
-    span{
+    span {
       font-size: 0.8em;
     }
   }

@@ -1,4 +1,4 @@
-Koala.languages["pt_pt"] = {
+Koala.languages["pt"] = {
     "Bold": "Negrito",
     "Italic": "Itálico",
     "Underline": "Sublinhado",

@@ -1,0 +1,32 @@
+{
+  "name": "koala",
+  "homepage": "http://koala.joaopluis.pt",
+  "authors": [
+    "João Luís <joao@joaopluis.pt>"
+  ],
+  "description": "A jQuery WYSIWYG HTML editor.",
+  "main": [
+    "js/koalaeditor.js",
+    "css/koalaeditor.less"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "wysiwyg",
+    "html",
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "index.html",
+    "website_assets",
+    ".idea"
+  ],
+  "dependencies": {
+    "jquery-ui": "^1.11.4",
+    "components-font-awesome": "^4.5.0"
+  }
+}

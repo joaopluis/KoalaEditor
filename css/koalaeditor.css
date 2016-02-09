@@ -1,3 +1,6 @@
+/*
+ * Koala Editor main LESS file
+ */
 .ke-box {
   display: flex;
   flex-direction: column;
@@ -11,7 +14,7 @@
   outline: none;
 }
 .ke-editor .editing-image {
-  outline: dashed 1px #77a2ad;
+  outline: dashed 1px #78a3ad;
   display: inline-block;
   position: relative;
 }
@@ -21,7 +24,7 @@
   right: -2px;
   width: 10px;
   height: 10px;
-  background: #77a2ad;
+  background: #78a3ad;
 }
 .ke-toolbar {
   border: 1px solid #cccccc;
@@ -29,8 +32,12 @@
   background: #f7f7f7;
   display: flex;
   flex-wrap: wrap;
+  text-align: left;
+  font-weight: normal;
   font-size: 16px;
   font-family: Lato, Arial, Helvetica, sans-serif;
+  text-shadow: none;
+  color: black;
 }
 .ke-toolbar .ke-button-container {
   display: flex;
@@ -53,14 +60,14 @@
   color: #333333;
 }
 .ke-toolbar .ke-toolbar-button:hover {
-  background: #77a2ad;
+  background: #78a3ad;
   color: white;
 }
 .ke-toolbar .ke-toolbar-button:focus {
   outline: none;
 }
 .ke-toolbar .ke-toolbar-button.active {
-  color: #77a2ad;
+  color: #78a3ad;
 }
 .ke-toolbar .sep {
   width: 1px;
@@ -141,10 +148,10 @@
 }
 .ke-prompt .ke-prompt-input:focus {
   outline: none;
-  border-color: #77a2ad;
+  border-color: #78a3ad;
 }
 .ke-prompt .ke-drop-area {
-  border: 3px dashed #77a2ad;
+  border: 3px dashed #78a3ad;
   text-align: center;
   margin: 0.8em 0;
   padding: 0.8em;
@@ -172,7 +179,7 @@
   display: inline-block;
   border: none;
   color: white;
-  background-color: #77a2ad;
+  background-color: #78a3ad;
   padding: 0.4em 0.6em;
   border-radius: 0.2em;
   margin: 0;
@@ -198,7 +205,7 @@
   color: black;
 }
 .ke-dropdown ul li:hover {
-  background: #77a2ad;
+  background: #78a3ad;
   color: white;
 }
 .ke-code {

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="joaopluis.pt" uploadOnCheckin="9f09c664-7aa0-48a8-b8a0-64c4dc92fc51">
-    <serverData>
-      <paths name="joaopluis.pt">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/public_html/koala" local="$PROJECT_DIR$" web="/koala" />
-          </mappings>
-        </serverdata>
-      </paths>
-    </serverData>
+  <component name="PublishConfigData" serverName="koala.joaopluis.pt" uploadOnCheckin="9f09c664-7aa0-48a8-b8a0-64c4dc92fc51">
     <option name="myUploadOnCheckinName" value="joaopluis.pt" />
   </component>
 </project>

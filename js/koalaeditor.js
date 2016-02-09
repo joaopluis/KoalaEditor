@@ -15,14 +15,19 @@ var Koala = Koala || {};
     Koala.upload = function (file, uploadURL, onload, loadend, progress) {
         var xhr = new XMLHttpRequest();
         xhr.open("post", uploadURL, true);
-        xhr.upload.addEventListener("progress", progress, false);
-        xhr.onload = onload;
-        xhr.addEventListener("loadend", loadend, false);
+        if (typeof progress === "function") {
+            xhr.upload.addEventListener("progress", progress, false);
+        }
+        if (typeof onload === "function") {
+            xhr.onload = onload;
+        }
+        if (typeof loadend === "function") {
+            xhr.addEventListener("loadend", loadend, false);
+        }
         var fdata = new FormData();
         fdata.append("file", file);
         xhr.send(fdata);
-
-    }
+    };
 
     /**
      * Command class
@@ -237,7 +242,7 @@ var Koala = Koala || {};
                         result = JSON.parse(this.responseText);
                         Koala.getCommand(btn.options.command).execute(editor, result.link);
                     }, function () {
-                        promptDiv.slideUp(function(){
+                        promptDiv.slideUp(function () {
                             promptBody.show();
                             promptFooter.show();
                             progressEl.hide();
@@ -431,6 +436,7 @@ var Koala = Koala || {};
 
     Koala.Editor = function (element, settings) {
         this.element = element;
+        //this.editorBox = element;
         this.html = element.html();
         this.settings = settings;
         this.toolbar = null;
@@ -453,22 +459,24 @@ var Koala = Koala || {};
             var newDiv = $('<div />');
             this.formControl.after(newDiv);
             this.formControl.hide();
-            this.element = newDiv;
+            this.editorBox = newDiv;
+        } else {
+            this.editorBox = this.element;
         }
 
         /***
-         * Add Koala class to top element and empty it. (its HTML was saved before)
+         * Add Koala class to editor box and empty it. (its HTML was saved before)
          */
 
-        this.element.addClass('ke-box');
-        this.element.html("");
+        this.editorBox.addClass('ke-box');
+        this.editorBox.html("");
 
         /***
-         * If a theme is passed as an option, add its class to the top element.
+         * If a theme is passed as an option, add its class to the editor box.
          */
 
         if (this.settings.theme) {
-            this.element.addClass(this.settings.theme);
+            this.editorBox.addClass(this.settings.theme);
         }
 
         /***
@@ -500,12 +508,14 @@ var Koala = Koala || {};
             /**
              * Add the toolbar to the main element.
              */
-            this.element.append(this.toolbar);
+            this.editorBox.append(this.toolbar);
 
             /**
              * Act on button clicks.
              */
             this.toolbar.on('click', '.ke-toolbar-button', function (evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
                 editor.resetSelection();
                 $('.ke-prompt, .ke-dropdown').not($(this).parent().find('.ke-prompt, .ke-dropdown')).slideUp();
                 if (Koala.getButton($(this).attr('data-name')).options.options) {
@@ -521,7 +531,9 @@ var Koala = Koala || {};
             /**
              * Act on dropdown item click.
              */
-            this.toolbar.on('click', '.ke-dropdown li', function (e) {
+            this.toolbar.on('click', '.ke-dropdown li', function (evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
                 editor.resetSelection();
                 Koala.getButton($(this).attr("data-button")).do(editor, $(this).attr("data-value"));
                 $(this).parents('.ke-dropdown').slideUp();
@@ -542,19 +554,19 @@ var Koala = Koala || {};
          * Set text window HTML as the initial top element value and add it to the top element.
          */
         this.textWindow.html(this.getHTML());
-        this.element.append(this.textWindow);
+        this.editorBox.append(this.textWindow);
 
         /***
          * Trigger contentchange.
          */
         this.textWindow.on('input', function (evt) {
-            editor.textWindow.trigger('contentchange');
+            editor.element.trigger('koala.contentchange');
         });
 
         /***
          * Act on contentchange.
          */
-        this.textWindow.on('contentchange', function (e) {
+        this.element.on('koala.contentchange', function (e) {
             editor.html = editor.textWindow.html();
             if (editor.formControl) {
                 editor.formControl.val(editor.getHTML());
@@ -568,38 +580,8 @@ var Koala = Koala || {};
         /***
          * Mark content as dirty. (initial html)
          */
-        this.textWindow.trigger('contentchange');
+        this.element.trigger('koala.contentchange');
 
-
-        // Handle images
-        /*this.textWindow.on('click', 'img', function (e) {
-         e.stopPropagation();
-         $(this).addClass('selected');
-         $(this).wrap('<div class="editing-image"></div>');
-         var wrapper = $(this).parent();
-         var imgToolbar = $('<div class="ke-img-btn-toolbar"></div>');
-         wrapper.append(imgToolbar);
-         var editBtn = $('<button contenteditable="false"><span class="fa fa-fw fa-pencil"></span></button>');
-         var delBtn = $('<button class="delete" contenteditable="false"><span class="fa fa-fw fa-trash"></span></button>');
-         imgToolbar.append(editBtn).append(delBtn);
-         img = $(this);
-         editBtn.click(function () {
-         width = prompt("Width");
-         img.css('width', parseInt(width));
-         });
-         delBtn.click(function(){
-         if(confirm(editor.getTranslation("Do you really want to remove this image?"))){
-         wrapper.remove();
-         editor.textWindow.trigger("contentchange");
-         }
-         });
-         });
-         this.textWindow.click(function (evt) {
-         $('.ke-img-btn-toolbar').remove();
-         $('img.selected').unwrap();
-         $('img.selected').removeClass('selected');
-         });
-         */
 
         // Let's try some new Image Stuff!
         this.textWindow.on('click', 'img', function (e) {
@@ -643,7 +625,7 @@ var Koala = Koala || {};
                 img.css("width", w);
                 img.css("height", h);
                 img.removeClass('selected');
-                editor.textWindow.trigger("contentchange");
+                editor.element.trigger("koala.contentchange");
             }
 
         });
@@ -667,14 +649,14 @@ var Koala = Koala || {};
          */
         this.textWindow.on('selectstart', function () {
             $(document).one('mouseup keyup', function () {
-                editor.textWindow.trigger('selectchange');
+                editor.element.trigger('koala.selectchange');
             });
         });
 
         /***
          * Act on selectchange
          */
-        this.textWindow.on("selectchange", function (evt) {
+        this.element.on("koala.selectchange", function (evt) {
             editor.range = editor.getSelection().getRangeAt(0);
             editor.updateToolbar();
         });
@@ -686,7 +668,7 @@ var Koala = Koala || {};
             "class": "ke-code",
             "contenteditable": ""
         });
-        this.element.append(this.codeWindow);
+        this.editorBox.append(this.codeWindow);
 
         /***
          * Some tweaks for a better code.
@@ -707,13 +689,13 @@ var Koala = Koala || {};
 
     Koala.Editor.prototype.destroy = function () {
         if (this.formControl) {
-            this.element.remove();
+            this.editorBox.remove();
             this.formControl.show();
             this.formControl.data("koala", null);
         } else {
-            this.element.removeClass("ke-box");
-            this.element.html(this.getHTML());
-            this.element.data("koala", null);
+            this.editorBox.removeClass("ke-box");
+            this.editorBox.html(this.getHTML());
+            this.editorBox.data("koala", null);
         }
     };
 
@@ -756,7 +738,7 @@ var Koala = Koala || {};
     };
 
     Koala.Editor.prototype.getTranslation = function (string) {
-        if (this.settings.language && Koala.languages[this.settings.language][string]) {
+        if (this.settings.language && Koala.languages[this.settings.language] && Koala.languages[this.settings.language][string]) {
             return Koala.languages[this.settings.language][string];
         }
         return string;

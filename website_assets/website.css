@@ -66,7 +66,7 @@ body {
 }
 button {
   border: none;
-  background: #77a2ad;
+  background: #78a3ad;
   font-size: 16px;
   font-family: Lato, Arial, Helvetica, sans-serif;
   border-radius: 0.3em;
@@ -75,24 +75,24 @@ button {
   color: white;
 }
 section h1 {
-  color: #77a2ad;
+  color: #78a3ad;
   font-size: 2em;
 }
 h2 {
   font-size: 1.3em;
-  color: #77A2AD;
+  color: #78a3ad;
 }
 code {
   border-radius: 0.3em;
-  background: #f6f9fa;
-  border: dashed 1px #77a2ad;
+  background: #f7f9fa;
+  border: dashed 1px #78a3ad;
   display: inline-block;
   padding: 0.3em 0.4em 0.2em;
 }
 pre {
   border-radius: 0.3em;
-  background: #f6f9fa;
-  border: dashed 1px #77a2ad;
+  background: #f7f9fa;
+  border: dashed 1px #78a3ad;
   display: block;
   padding: 1em;
 }
@@ -112,5 +112,6 @@ footer {
 }
 footer a {
   text-decoration: none;
-  color: #77a2ad;
+  color: #78a3ad;
 }
+/*# sourceMappingURL=website.css.map */
