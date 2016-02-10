@@ -7,7 +7,6 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/js/langs/pt_pt.min.js" />
       <root url="file://$PROJECT_DIR$/js/langs/pt.min.js" />
       <root url="file://$PROJECT_DIR$/js/koalaeditor.min.js" />
     </CLASSES>

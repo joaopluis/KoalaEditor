@@ -699,6 +699,11 @@ var Koala = Koala || {};
         this.html = html;
     };
 
+    Koala.Editor.prototype.insert = function (html) {
+        this.resetSelection();
+        document.execCommand("inserthtml", false, html);
+    };
+
     Koala.Editor.prototype.destroy = function () {
         if (this.formControl) {
             this.editorBox.remove();
