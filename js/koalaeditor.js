@@ -752,7 +752,8 @@ var Koala = Koala || {};
     };
 
     function createCaretPlacer(atStart, el) {
-        $(el).get(0).focus();
+        el = $(el).get(0);
+        el.focus();
         if (typeof window.getSelection != "undefined"
             && typeof document.createRange != "undefined") {
             var range = document.createRange();
