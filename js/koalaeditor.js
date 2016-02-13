@@ -1,3 +1,27 @@
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2016 João Luís
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 var Koala = Koala || {};
 
 (function ($) {
@@ -197,7 +221,8 @@ var Koala = Koala || {};
             dropdown.addClass('ke-dropdown');
             var ddList = $('<ul />');
             $.each(this.options.options, function (index, value) {
-                var template = '<li data-button="' + btn.options.name + '" data-value="' + value.value + '" title="' + editor.getTranslation(value.label) + '">';
+                var template = '<li data-button="' + btn.options.name + '" data-value="' + value.value + '" title="' +
+                               editor.getTranslation(value.label) + '">';
                 if (value.icon) {
                     template += '<span class="fa ' + value.icon + '"></span>';
                 } else {
@@ -215,7 +240,8 @@ var Koala = Koala || {};
 
             promptDiv.append("<div class=\"ke-arrow\"></div>");
 
-            promptDiv.append("<header class=\"ke-prompt-header\"><h1>" + editor.getTranslation(this.options.label) + "</h1></header>");
+            promptDiv.append("<header class=\"ke-prompt-header\"><h1>" + editor.getTranslation(this.options.label) +
+                             "</h1></header>");
 
             var promptBody = $('<div/>');
             promptBody.addClass("ke-prompt-body");
@@ -745,7 +771,8 @@ var Koala = Koala || {};
         if (this.settings.toolbar) {
             var editor = this;
             this.toolbar.find('.ke-toolbar-button').each(function (index) {
-                if (Koala.getButton($(this).attr('data-name')).isActive(editor, Koala.getButton($(this).attr('data-name')).options.value)) {
+                if (Koala.getButton($(this).attr('data-name')).isActive(editor,
+                        Koala.getButton($(this).attr('data-name')).options.value)) {
                     $(this).addClass("active");
                 } else {
                     $(this).removeClass("active");
@@ -755,10 +782,15 @@ var Koala = Koala || {};
     };
 
     Koala.Editor.prototype.getTranslation = function (string) {
-        if (this.settings.language && Koala.languages[this.settings.language] && Koala.languages[this.settings.language][string]) {
+        if (this.settings.language && Koala.languages[this.settings.language] &&
+            Koala.languages[this.settings.language][string]) {
             return Koala.languages[this.settings.language][string];
         }
         return string;
+    };
+
+    Koala.Editor.prototype.attr = function(name){
+        return this.element.attr(name);
     };
 
     $.fn.koala = function (options) {
@@ -768,7 +800,8 @@ var Koala = Koala || {};
         }
 
         var settings = $.extend({
-            buttons: ['bold', 'italic', 'underline', 'sep', 'align', 'formatBlock', 'ul', 'ol', 'image', 'link', 'unlink', 'sep', 'undo', 'redo', 'sep', 'code'],
+            buttons: ['bold', 'italic', 'underline', 'sep', 'align', 'formatBlock', 'ul', 'ol', 'image', 'link',
+                      'unlink', 'sep', 'undo', 'redo', 'sep', 'code'],
             toolbar: true
         }, options);
 
