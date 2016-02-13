@@ -751,6 +751,32 @@ var Koala = Koala || {};
         sel.addRange(range);
     };
 
+    function createCaretPlacer(atStart, el) {
+        $(el).get(0).focus();
+        if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+            var range = document.createRange();
+            range.selectNodeContents(el);
+            range.collapse(atStart);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (typeof document.body.createTextRange != "undefined") {
+            var textRange = document.body.createTextRange();
+            textRange.moveToElementText(el);
+            textRange.collapse(atStart);
+            textRange.select();
+        }
+    }
+
+    Koala.Editor.prototype.setCursorToStart = function () {
+        createCaretPlacer(true, this.editorBox);
+    };
+
+    Koala.Editor.prototype.setCursorToEnd = function () {
+        createCaretPlacer(false, this.editorBox);
+    };
+
     Koala.Editor.prototype.getSelection = function () {
         return window.getSelection();
     };
@@ -760,6 +786,8 @@ var Koala = Koala || {};
             var sel = window.getSelection();
             sel.removeAllRanges();
             sel.addRange(this.range);
+        } else {
+            this.setCursorToEnd();
         }
     };
 
@@ -789,7 +817,7 @@ var Koala = Koala || {};
         return string;
     };
 
-    Koala.Editor.prototype.attr = function(name){
+    Koala.Editor.prototype.attr = function (name) {
         return this.element.attr(name);
     };
 
