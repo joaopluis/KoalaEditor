@@ -171,7 +171,7 @@ var Koala = Koala || {};
             editor.codeWindow.show();
             editor.textWindow.hide();
         } else {
-            editor.textWindow.html(editor.html);
+            //editor.textWindow.html(editor.html);
             editor.textWindow.show();
             editor.codeWindow.hide();
         }
@@ -706,7 +706,13 @@ var Koala = Koala || {};
             "class": "ke-code",
             "contenteditable": ""
         });
+        this.codeWindow.on('input', function (evt) {
+            editor.textWindow.html(editor.codeWindow.text().trim())
+            editor.element.trigger('koala.contentchange');
+        });
         this.editorBox.append(this.codeWindow);
+
+
 
         /***
          * Some tweaks for a better code.

@@ -209,6 +209,9 @@
   color: white;
 }
 .ke-code {
+  border-radius: 0;
+  text-align: left;
+  font-size: 14px;
   border: 1px solid #cccccc;
   margin: 0;
   padding: 10px;
