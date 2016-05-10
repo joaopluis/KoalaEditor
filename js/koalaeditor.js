@@ -205,6 +205,7 @@ var Koala = Koala || {};
         btnDiv.addClass('ke-button-container')
         var button = $('<button />');
         button.addClass('ke-toolbar-button');
+        button.attr('type', 'button');
         button.attr('data-name', this.options.name);
         button.attr('title', editor.getTranslation(this.options.label));
         if (this.options.icon) {
@@ -326,6 +327,7 @@ var Koala = Koala || {};
             var promptFooter = $('<footer />');
             promptFooter.addClass("ke-prompt-footer");
             var promptBtn = $('<button />');
+            promptBtn.attr('type', 'button');
             promptBtn.text(editor.getTranslation("OK"));
             promptFooter.append(promptBtn);
             promptDiv.append(promptFooter);
